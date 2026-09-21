@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lalit Maurya - Data Analyst & Infographic Expert</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1E3A8A;
+            --accent: #06B6D4;
+            --accent-dark: #0891B2;
+            --bg: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --light-bg: #F9FAFB;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        nav a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, #0F2B5B 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #DDD;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-box {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            padding-left: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.75rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0rem;
+            top: 1.5rem;
+            width: 2px;
+            height: 100%;
+            background: var(--border);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-item h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-item .role {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Technical Skills */
+        .tech-skills {
+            padding: 5rem 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .tech-category {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 3px solid var(--accent);
+        }
+
+        .tech-category h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: var(--bg);
+            color: var(--accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--accent);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #0F2B5B 100%);
+            color: white;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #DDD;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--accent-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container" style="max-width: 1200px; margin: 0 auto;">
+            <div class="logo">LM</div>
+            <div>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Lalit Maurya</h1>
+            <div class="tagline">Data Analyst & Infographic Expert</div>
+            <p>Transforming complex environmental data into compelling visualizations and evidence-based stories. 18+ years of expertise in data analysis, infographics, and science communication.</p>
+            <a href="#contact" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a Senior Manager at the Centre for Science and Environment (CSE) with deep expertise in transforming complex datasets, scientific reports, and policy documents into compelling data stories, infographics, and interactive visualizations.</p>
+                    <p>My work focuses on environmental research, climate change, air quality tracking, and sustainable development. I specialize in creating evidence-based visual communications that make data accessible and impactful.</p>
+                    <div class="stat-box">
+                        <div class="stat-number">18+</div>
+                        <div class="stat-label">Years of Professional Experience</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">300+</div>
+                        <div class="stat-label">Cities Tracked for Air Quality Analysis</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Years of Climate Data Visualized</div>
+                    </div>
+                </div>
+                <div style="background: var(--light-bg); padding: 2rem; border-radius: 8px; height: fit-content;">
+                    <h3 style="color: var(--primary); margin-bottom: 1.5rem;">Core Expertise</h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li>✓ Data Visualization & Analytics</li>
+                        <li>✓ Infographics & Visual Storytelling</li>
+                        <li>✓ Environmental Data Analysis</li>
+                        <li>✓ Interactive Dashboards & Trackers</li>
+                        <li>✓ GIS & Mapping</li>
+                        <li>✓ Science Communication</li>
+                        <li>✓ Knowledge Management</li>
+                        <li>✓ Digital Content Strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <div class="container">
+            <h2 class="section-title" id="skills">Key Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Data Visualization</h3>
+                    <p>Expert in creating compelling visual representations of complex data using D3.js, Power BI, Tableau, Datawrapper, and Flourish.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h3>Infographics Design</h3>
+                    <p>Specialized in designing interactive and static infographics that communicate data insights effectively to diverse audiences.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌍</div>
+                    <h3>GIS & Mapping</h3>
+                    <p>Proficient in ArcGIS, ArcView, and cartographic visualization for geospatial data analysis and interactive mapping.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3>Data Analysis</h3>
+                    <p>Strong background in SQL, Python, and statistical analysis for data interpretation, trend identification, and insights generation.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📈</div>
+                    <h3>Analytics & Tracking</h3>
+                    <p>Built and maintained air quality trackers, heat trackers, COVID-19 dashboards covering hundreds of cities and data points.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">✍️</div>
+                    <h3>Data Storytelling</h3>
+                    <p>Expert in crafting narratives around data, creating evidence-based articles and knowledge products for diverse platforms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section class="tech-skills">
+        <div class="container">
+            <h2 class="section-title">Technical Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-category">
+                    <h4>Visualization</h4>
+                    <div class="tech-list">
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">Power BI</span>
+                        <span class="tech-tag">Tableau</span>
+                        <span class="tech-tag">Datawrapper</span>
+                        <span class="tech-tag">Flourish</span>
+                        <span class="tech-tag">Observable</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h4>Design & Graphics</h4>
+                    <div class="tech-list">
+                        <span class="tech-tag">Adobe Illustrator</span>
+                        <span class="tech-tag">Photoshop</span>
+                        <span class="tech-tag">Inkscape</span>
+                        <span class="tech-tag">CorelDRAW</span>
+                        <span class="tech-tag">Canva</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h4>Databases & Analysis</h4>
+                    <div class="tech-list">
+                        <span class="tech-tag">SQL</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Stata</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h4>GIS & Mapping</h4>
+                    <div class="tech-list">
+                        <span class="tech-tag">ArcGIS</span>
+                        <span class="tech-tag">ArcView</span>
+                        <span class="tech-tag">Google Maps</span>
+                        <span class="tech-tag">Remote Sensing</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h4>Web & CMS</h4>
+                    <div class="tech-list">
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Drupal</span>
+                        <span class="tech-tag">PHP</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h4>Knowledge Management</h4>
+                    <div class="tech-list">
+                        <span class="tech-tag">Koha</span>
+                        <span class="tech-tag">DSpace</span>
+                        <span class="tech-tag">MediaWiki</span>
+                        <span class="tech-tag">Content Strategy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <h2 class="section-title">Professional Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Centre for Science and Environment (CSE)</h3>
+                    <div class="role">Senior Manager (April 2023 – Present)</div>
+                    <p>Lead research, analysis, and visualization of environmental data. Manage Air Quality Tracker (300+ cities), Heat Tracker (38 cities), and develop infographics and data stories for environmental communication. Conduct environmental research and knowledge management.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Centre for Science and Environment (CSE)</h3>
+                    <div class="role">Manager (April 2021 – March 2023)</div>
+                    <p>Designed interactive infographics for Down To Earth. Performed data analysis and visualization across diverse environmental topics. Managed COVID-19 Tracker and air-quality records for 300+ cities.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Centre for Science and Environment (CSE)</h3>
+                    <div class="role">Deputy Information Manager (July 2014 – March 2021)</div>
+                    <p>Led data analysis, visualization, and infographic development. Developed Climate Spiral (100+ years of climate data), managed India Environment Portal, and contributed to interactive data products.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>DELNET — Developing Library Network</h3>
+                    <div class="role">ILL/DDS/Network Assistant (July 2005 – July 2008)</div>
+                    <p>Managed information resources across 1,300+ libraries in India. Coordinated information services and worked with RDBMS databases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Let's Connect</h2>
+            <p>Whether you need data visualization, infographics, or analytics expertise, I'd love to discuss your project.</p>
+            <div class="contact-links">
+                <a href="mailto:lalit.maurya1@gmail.com" class="contact-link">✉️ Email</a>
+                <a href="tel:+919654130316" class="contact-link">📞 Call</a>
+                <a href="https://www.linkedin.com/in/lalit-maurya" class="contact-link" target="_blank">💼 LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Lalit Maurya. Data Analyst & Infographic Expert. New Delhi, India.</p>
+    </footer>
+</body>
+</html>
