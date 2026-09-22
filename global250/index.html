@@ -1,0 +1,475 @@
+<!DOCTYPE html><head>
+
+<meta charset="utf-8">
+<meta charset="utf-8">
+
+<title>Large businesses; larger emission footprints</title>
+		<meta name="description" content="Out of 250 larget emitters, India’s state-owned company 'Coal India', that topped the list with largest GHG emission—2076.2 million tonnes. Besides Coal India, three other Indian companies are among 100 global businesses with the highest carbon footprint" />
+			
+		<meta name="keywords" content="Climate Change, Climate Impact, Carbon Dioxide, Co2, Green House Gases, India, United States, China, Global Warming, Extreme Weather Events, Reuters, Coal India, NTPC, ONGC, Exxon Mobil, Reliance, Petrochemical Industries, Industries, Energy, Fossil Fuel, Coal, Cement, Oil, Natural Gas, Global Emission, Google, China, Russia, Coal India, PJSC Gazprom, Exxon Mobil Corporation, Thyssenkrupp AG, China Petroleum & Chemical Corporation, Rosneft OAO, Cummins Inc., PETROCHINA Company Limited, Royal Dutch Shell, Rio Tinto, China Shenhua Energy, Korea Electric Power Corp, Total,Petroleo Brasileiro SA - Petrobras, United Technologies Corporation, BP, BHP Billiton, Chevron Corporation, Valero Energy Corporation, Wistron Corp, Peabody Energy Corporation " />
+		
+		<meta property="og:title" content="Large businesses; larger emission footprints">
+<meta property="og:description" content="Out of 250 larget emitters, India’s state-owned company 'Coal India', that topped the list with largest GHG emission—2076.2 million tonnes. Besides Coal India, three other Indian companies are among 100 global businesses with the highest carbon footprint">
+<meta property="og:type" content="Infographic">
+<meta property="og:image" content="http://www.indiaenvironmentportal.org.in/media/iep/infographics/global250/global250.jpg">
+<meta name="twitter:card" value="photo">
+<meta name="twitter:image" value="http://www.indiaenvironmentportal.org.in/media/iep/infographics/global250/global250.jpg">
+<meta name="twitter:title" value="Large businesses; larger emission footprints">
+<meta name="twitter:description" value="Out of 250 larget emitters, India’s state-owned company 'Coal India', that topped the list with largest GHG emission—2076.2 million tonnes. Besides Coal India, three other Indian companies are among 100 global businesses with the highest carbon footprint">
+		
+		
+		
+		<meta name="author" content="Lalit Maurya and Subhojit Goswami" />
+		<link rel="shortcut icon" href="../favicon.ico"> 
+		
+		
+
+<script src="d3.v3.js"></script>
+<style>
+body { overflow: auto; margin: 0; background: #ddd; }
+#wrapper { width: 940px; height: 1000px; margin: 0 auto; position: relative; background: white; }
+#text {width: 940px; height: 1750px; margin-top:-50px; position: relative; background: white; text-align:center; }
+p{ padding-left:5%; padding-right:5%; text-align:left;}
+
+
+#info { position: fixed; top: 0; width: 900px; background: rgba(90,90,90,0.9); padding: 20px; opacity: 0; color: white; z-index: 100; font-size: 20px;}
+#info #segment { font-size: 28px; margin-right: 10px; text-transform: uppercase; letter-spacing: 1px; color: #eeaa0d;  }
+#info #name { font-size: 16px; }
+#info #percent { font-size: 14px; margin-left: 10px;color: #eeaa0d;  }
+
+#splash { width: 400px; position: absolute; top: 100px; left: 30px; font-size: 40px; font-weight:500; line-height: 1.1; }
+#splash #strap { font-size: 18px; line-height: 1.3; margin-top: 10px; color: #666; }
+#splash #tip { font-size: 16px; margin-top: 20px; line-height: 1.3; color:#993300;}
+#splash a:link, a:visited { text-decoration: none; color: #005689 }
+#splash a:hover, a:active { text-decoration: none; color: #005689; }
+
+#credits { position: absolute; bottom: 10px; left: 10px; font-size: 10px; }
+
+<!--#tweet-box { position: absolute; opacity: 0; left: 335px; top: 330px; width: 230px; padding: 10px 20px; text-align: center; background: #333; color: white; display: none; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; }
+#tweet-box #tweet-text { margin: 10px 0; font-size: 13px; line-height: 1.2;}
+#tweet-box #close { float: right; cursor: pointer; } -->
+
+path { stroke: #fff; fill-rule: evenodd; }
+text { font-size: 12px; pointer-events: none; fill: white; }
+svg { margin: 50px 0 0 35px; }	
+.highlighted-path { fill: #345!important; opacity: 1!important; }
+.hidden { visibility: hidden; }
+
+}
+
+</style>
+
+<link rel="stylesheet" href="fonts.css" rel="stylesheet">
+<link rel="stylesheet" href="main.css" rel="stylesheet">	
+
+
+
+
+
+</head>
+<body oncontextmenu="return false">
+	<div id="wrapper">
+		<div id="info">
+				<div><span id="segment">,&nbsp;</span>&nbsp;<span id="name"></div>
+				<div><span id="emissions">&nbsp;</span><span id="percent"></span></div>
+		</div>
+		<div id="splash">
+				Large businesses; larger emission footprints
+				<div id="strap">Out of 250 largest emitters, India's state-owned company 'Coal India' topped the list with largest GHG emission- 2076.2 million tonnes. Besides Coal India, three other Indian companies are among 100 global businesses with the highest carbon footprint.</div>
+				<div id="tip">
+					<i class="icon-hand-up"></i> Hover and click to explore<br>
+					<i class="icon-info-sign"></i> <a target="_top" href="http://www.indiaenvironmentportal.org.in/content/448722/global-250-greenhouse-gas-emitters-a-new-business-logic/" target="_blank">Data source: Thompson Reuters</a><br>
+					<i class="icon-info-sign"></i> <a target="_top" href="https://twitter.com/lalitmaurya" target="_blank">by Lalit Maurya &amp; Amit Kumar</a>
+					
+					
+					
+				</div>
+		</div>
+		<div id="tweet-box">
+			<i id="close" class="icon-remove"></i>
+			<div id="tweet-text"></div>
+			<div id="tweet-button"></div>		
+		</div>		
+
+<div align="center">
+<span style=" color:#ffffff; background-color:#dc143c; border-radius: 25px; padding:10px; margin-top:15px;">Top 100</span>&nbsp;&nbsp;
+<span style=" color:#ffffff; background-color:#0064A2; border-radius: 25px; padding:10px; margin-top:15px;">Nation States</span>&nbsp;&nbsp;
+<span style=" color:#ffffff; background-color:#49AB57; border-radius: 25px; padding:10px; margin-top:15px;">State owned</span>&nbsp;&nbsp;
+<span style=" color:#ffffff; background-color:#ffa833; border-radius: 25px; padding:10px; margin-top:15px;">Investor Owned</span> &nbsp;&nbsp;
+<span style=" color:#ffffff; background-color:#ee4a0d; border-radius: 25px; padding:10px; margin-top:15px;">Indian Companies</span></div>
+
+
+
+
+
+		
+</div>
+
+
+
+
+
+<center><br>
+
+
+<div id="text"><p style="font-size:20px; line-height:25px;">	<br>In the past three years, emissions from the businesses with the highest emission had been stable instead of going down by roughly three percent per year” needed to limit global warming in line with goals set by the 2015 Paris climate agreement.<br><br>
+The 33 per cent of top 100 GHGs emitters in 2016 are European. The US has the second largest share with 26 per cent of top 100 companies being of American origin. China has the third largest share with 14 per cent of top GHG emitters in 2016 being of Chinese origin.
+<br><br>
+
+<img src="emissions.png" width="100%" /><br>
+
+<br>
+
+<span style="font-size:14px; color:#990000; font-weight:500;"> Data source: CDP Carbon Majors Report, 2017</span><br><br>
+
+However, it is India’s state-owned company, Coal India, that topped the list with largest GHG emission—2076.2 million tonnes. Besides Coal India, three other Indian companies are among 100 global businesses with the highest carbon footprint.
+<br><br>
+
+<span style="font-size:2em;">Fast Facts</span><br><br>
+
+<span style="font-size:1.2em;">&#10102;</span>&nbsp;&nbsp;India's state-owned company, Coal India, tops the list with largest GHG emission—2076.2 million tonnes. Coal India’s GHG emissions in 2016 were just 17 per cent lower than the country’s CO2 output—2431 million tonnes. Besides Coal India, three other Indian companies (NTPC Ltd, Reliance Industries, ONGC) are among 100 global businesses with the highest carbon footprint.<br><br>
+
+<span style="font-size:1.2em;">&#10103;</span>&nbsp;&nbsp;In 2016, the 33 per cent of top 100 GHGs emitters in 2016 are European.<br><br>
+
+<span style="font-size:1.2em;">&#10104;</span>&nbsp;&nbsp;The US has the second largest share with 26 per cent of top 100 companies being of American origin.<br><br>
+
+<span style="font-size:1.2em;">&#10105;</span>&nbsp;&nbsp;All the GHG emitters of the US origin in top 100 are private-owned with ExxonMobil Corporation leading the pack.<br><br>
+
+<span style="font-size:1.2em;">&#10106;</span>&nbsp;&nbsp;China has the third largest share of top 100 GHG emitters in 2016 with 14 per cent of the businesses being of Chinese origin.<br><br>
+
+<span style="font-size:1.2em;">&#10107;</span>&nbsp;&nbsp;In China, nine out of 14 GHG emitters are state-owned—the highest concentration of state-owned firms in a single country.<br><br>
+
+<span style="font-size:1.2em;">&#10108;</span>&nbsp;&nbsp;Procter & Gamble is the only consumer goods company present in the Top 100.<br><br>
+
+<span style="font-size:1.2em;">&#10109;</span>&nbsp;&nbsp;Luxembourg, one of the world’s smallest countries with a total area of 2,586 sq km, is on the list, due to ArcelorMittal—the world’s largest steel producing company.
+
+<br><br>
+<div align="right" style="padding-right:5%; font-size:20px;"> <a href="http://www.downtoearth.org.in/news/four-indian-companies-among-top-100-ghg-emitters-in-2016-59131" target="_blank">Read the news story</a><br><br><span style="font-size:11px; text-align:left">Drawing based on work by Mike Bostock, Jason Davies and Duncan Clark
+
+
+</div>
+
+
+
+<center><!-- Go to www.addthis.com/dashboard to customize your tools -->
+
+</div></p></center>
+
+<p>
+
+
+
+
+
+</p>
+
+
+
+</body>
+<script>
+
+// Set up tweet buttons
+function addTweetButton(tweetText) {
+  d3.select('#tweet-button').html("");
+  twttr.widgets.createShareButton(
+    'http://gu.com/p/3kgyy/tw',
+    document.getElementById('tweet-button'),
+    function (el) {  },
+    { count: 'none', text: tweetText, via: 'downtoearth & @LalitMaurya' }
+    );
+}
+
+//Set up graphic 
+var width = 940,
+    height = 860,
+    radius = height / 2,
+    x = d3.scale.linear().range([0, 2 * Math.PI]),
+    y = d3.scale.pow().exponent(1.3).domain([0, 1]).range([0, radius]),
+    padding = 5,
+    duration = 1000,
+		centreDepth = 10;
+
+var tweetBoxShowing = false;
+
+var div = d3.select("#wrapper");
+
+var vis = div.append("svg")
+    .attr("width", width + padding * 2)
+    .attr("height", height + padding * 2)
+  .append("g")
+    .attr("transform", "translate(" + [radius + padding, radius + padding] + ")");
+
+var partition = d3.layout.partition()
+    .value(function(d) { return d.size; });
+
+var arc = d3.svg.arc()
+    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+    .innerRadius(function(d) { return Math.max(0, d.y ? y(d.y) : d.y); })
+    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+var labelFits = function(d) {
+	return x(d.x + d.dx) - x(d.x) > 0.05;
+};
+
+d3.json("https://raw.githubusercontent.com/LalitMaurya/India-Environment-Portal/master/companies.json", function(error, root) {
+  var nodes = partition.nodes(root);
+
+	var path = vis.selectAll("path").data(nodes);
+  path.enter().append("path")
+      .attr("id", function(d, i) { return "path-" + i; })
+      .attr("d", arc)
+      .attr("fill-rule", "evenodd")
+	    .style("fill", function(d) { return colors(d); })
+      .on("click", function(d) { return d.depth < 4 ? click(d) : click(d.parent) })
+			.on("mouseover", mouseOver)
+			.on("mouseout", mouseOut);
+
+  var text = vis.selectAll("text").data(nodes);
+  var textEnter = text.enter().append("text")
+      .style("fill-opacity", 1)
+			.style("fill", function(d) { return labelFits(d) ? "white" : "none"; })
+      .attr("text-anchor", function(d) {
+        return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+      })
+			.attr("dy", ".35em")
+      .attr("transform", function(d) {
+				var multiline = (d.name || "").split(" ").length > 1,
+            angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+            rotate = angle + (multiline ? -.5 : 0);
+        return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+      });
+  textEnter.append("tspan")
+      .attr("x", 0)
+      .text(function(d) { 
+				// Truncate text where necessary for neatness
+				var firstLine =  d.name.split(" ")[0];
+				if (d.depth && firstLine.length > 13) {
+					return firstLine.substring(0,12) + ""
+				} else if (d.depth) {
+					return firstLine;
+				} else return ""
+			});
+  textEnter.append("tspan")
+      .attr("x", 0)
+      .attr("dy", "1.1em")
+      .text(function(d) { return d.depth ? d.name.split(" ")[1] || "" : ""; });
+
+	d3.select("svg")
+			.append("circle")
+			.attr("id","centre-label-background")
+			.attr("cx",435)
+			.attr("cy",435)
+			.attr("r",29)
+			.attr("fill","#900C3F")
+			.attr("pointer-events","none");
+	d3.select("svg")
+			.append("text")
+			.attr("id","centre-label")
+			.text("250 Companies")
+			.attr("x",435)
+			.attr("y",440)
+			.attr("text-anchor","middle")
+			.attr("pointer-events","none");
+	
+  function click(d) {
+		path.transition()
+      .duration(duration)
+      .attrTween("d", arcTween(d))
+			.each("end", function(d, i) {
+				// Once the scales have been updated by arcTween, update the
+				// fill style of the label depending on the size of the wedge
+				d3.select(text[0][i]).style("fill", function(d) { return labelFits(d) ? "white" : "none"; });
+			});
+		
+    // Somewhat of a hack as we rely on arcTween updating the scales.
+    text.style("visibility", function(e) {
+      return isParentOf(d, e) ? null : d3.select(this).style("visibility");
+    })
+      .transition()
+        .duration(duration)
+				.attrTween("text-anchor", function(d) {
+          return function() {
+            return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+          };
+        })
+        .attrTween("transform", function(d) {
+          var multiline = (d.name || "").split(" ").length > 1;
+          return function() {
+            var angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+                rotate = angle + (multiline ? -.5 : 0);
+            return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+          };
+        })
+        .style("fill-opacity", function(e) { return isParentOf(d, e) ? 1 : 1e-6; })
+        .each("end", function(e) {
+          d3.select(this).style("visibility", isParentOf(d, e) ? null : "hidden");
+        });
+				
+			// Fade headline, and adjust centre label, in/out depending on zoom
+			if (tweetBoxShowing) hideTweetBox();
+			if (d.depth == 0) {
+				d3.select("#splash").style("display","block").transition().duration(750).delay(500).style("opacity",1);
+				d3.select("#centre-label").text("Top 250 Emitters")
+						.style("font-family","Guardian-Text-Egyp-Web-Reg-Latin").style("font-size","12px");
+			} else {
+				d3.select("#splash").transition().duration(750).style("opacity",0).each("end", function() { 
+						d3.select(this).style("display","none");
+				});
+				d3.select("#centre-label").text("\uF010").style("font-family","FontAwesome").style("font-size","18px");
+				d3.select("#centre-label-background").transition().delay(750).style("fill",colors(d.parent))
+				if (d.depth == 3) {
+					var emissions = Math.round(d.value * 100)/100,
+							percent = Math.round(100 * 100 * emissions / 117599.0702)/100,
+							tweetText = d.name + " has caused " + percent + "% of manmade carbon emissions";
+					d3.select("#tweet-text").transition().delay(750).text("'" + tweetText + "'");
+					showTweetBox();
+					addTweetButton(tweetText);
+				}
+			}
+  }
+});
+
+d3.select("#close").on("click", function() { 
+	hideTweetBox();
+});
+
+function hideTweetBox() {
+	d3.select("#tweet-box")
+		.transition().duration(500)
+		.style("opacity",0)
+		.each("end", function() {
+			d3.select(this).style("display", "none");
+		});
+		tweetBoxShowing = false;
+}
+
+function showTweetBox() {
+	d3.select("#tweet-box")
+		.style("display", "block")
+		.transition().duration(500)
+		.style("opacity", 1);
+		tweetBoxShowing = true;
+}
+
+function mouseOver(d) {
+	displayDetails(d);
+	if (d.depth < 4) d3.select(this).style("cursor","pointer");
+	var ancestorArray = getAncestors(d);
+	d3.selectAll("path")
+			.classed("highlighted-path",false);
+	d3.selectAll("path")
+			.filter(function(node) { return ancestorArray.indexOf(node) >= 0; })
+			.classed("highlighted-path",true);
+	d3.select("#centre-label-background").classed("highlighted-path",true);
+}
+
+function displayDetails(d) {
+	d3.select("#info").transition().duration(750).style("opacity",1);
+	d3.select("#name").text(d.depth == 4 ? d.parent.name : d.name);
+	d3.select("#segment").text(d.depth == 4 ? d.name : " ");
+	var emissions = Math.round(d.value * 100)/100,
+			percent = Math.round(100 * 100 * emissions / 117599.0702)/100;
+	d3.select("#emissions").text(d.value != 0 ? emissions + " Mt CO2e" : " ");
+	d3.select("#percent").text(d.value != 0 ? "(" + percent + "% of total global GHG emission in 2016)" : " ");	
+}
+
+function mouseOut(d) {
+	d3.selectAll(".highlighted-path").classed("highlighted-path",false)
+}
+
+
+function getAncestors(node) {
+	var path = [];
+	var current = node;
+	while (current.parent) {
+		path.unshift(current);
+		current = current.parent;
+	}
+	path.unshift(current)
+	return path;
+}
+
+function isParentOf(p, c) {
+  if (p === c) return true;
+  if (p.children) {
+    return p.children.some(function(d) {
+      return isParentOf(d, c);
+    });
+  }
+  return false;
+}
+
+// Interpolate the scales!
+function arcTween(d) {
+  var my = maxY(d),
+      xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+      yd = d3.interpolate(y.domain(), [d.y, my]),
+      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+  return function(d) {
+    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+  };
+}
+
+function maxY(d) {
+  return d.children ? Math.max.apply(Math, d.children.map(maxY)) : d.y + d.dy;
+}
+
+function colors(d) {
+	if (d.name == "Rest 150") return "#aaa";
+	if (d.depth == 1) return "#dc143c";
+
+	if (d.name == "Investor own") return "#ffa833";
+	if (d.name == "Nation states") return "#0064A2";
+	if (d.name == "State owned") return "#49AB57";
+
+	if (d.parent && d.parent.name == "Investor own") return "#ffa833";
+	if (d.parent && d.parent.name == "Nation states") return "#488FC2";
+	if (d.parent && d.parent.name == "State owned") return "#76B847";
+
+	if (d.name == "Reliance Industries") {
+		return ({
+			"Investor own": " #ee4a0d ",
+			"Nation states":  " #ee4a0d ",
+			"State owned":    " #ee4a0d "
+		}[d.parent.parent.name]);
+	}
+
+	if (d.name == "Coal India") {
+		return ({
+			"Investor own": " #ee4a0d ",
+			"Nation states":  " #ee4a0d ",
+			"State owned":    " #ee4a0d "
+		}[d.parent.parent.name]);
+	}
+	
+	if (d.name == "Oil & Natural Gas") {
+		return ({
+			"Investor own": " #ee4a0d ",
+			"Nation states":  " #ee4a0d ",
+			"State owned":    " #ee4a0d "
+		}[d.parent.parent.name]);
+	}
+		
+	if (d.name == "NTPC Ltd") {
+		return ({
+			"Investor own": " #ee4a0d ",
+			"Nation states":  " #ee4a0d ",
+			"State owned":    " #ee4a0d "
+		}[d.parent.parent.name]);
+	}
+	return "#333";
+}
+
+// http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+function brightness(rgb) {
+  return rgb.r * .299 + rgb.g * .587 + rgb.b * .114;
+}
+</script>
+
+
+
+
+
+</body>
+</html>
