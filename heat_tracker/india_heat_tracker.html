@@ -308,8 +308,8 @@
               <input type="date" id="dateEnd" class="date-input" />
             </div>
           </div>
-          <button class="apply-button" onClick="applyDateFilter()">📅 Apply Filter</button>
-          <button class="reset-button" onClick="resetDateFilter()">↺ Show All</button>
+          <button class="apply-button" onclick="applyDateFilter()">📅 Apply Filter</button>
+          <button class="reset-button" onclick="resetDateFilter()">↺ Show All</button>
 
           <div class="search-box" style="margin-top: 16px;">
             <input type="text" id="citySearch" class="search-input" placeholder="Search city..." />
@@ -319,7 +319,7 @@
       </div>
 
       <div class="panel" style="margin-top: 20px;">
-        <div class="panel-header legend-toggle-header" onClick="toggleLegend()">
+        <div class="panel-header legend-toggle-header" onclick="toggleLegend()">
           <p class="panel-title">Map Legend</p>
           <p class="panel-sub">Color = latest max temp · Size = magnitude &nbsp;<span id="legendToggleIcon">▾</span></p>
         </div>
@@ -366,11 +366,11 @@
     <h2 class="records-title">📊 City Temperature Summary</h2>
     <p class="records-sub">Every card below reports the same set of facts as the highlighted city panel above.</p>
     <div class="sort-controls">
-      <button class="sort-btn active" data-sort="tmax" onClick="setSort('tmax', this)">Hottest Record</button>
-      <button class="sort-btn" data-sort="tminAsc" onClick="setSort('tminAsc', this)">Coldest Record</button>
-      <button class="sort-btn" data-sort="maxAnom" onClick="setSort('maxAnom', this)">Highest Max Anomaly</button>
-      <button class="sort-btn" data-sort="minAnom" onClick="setSort('minAnom', this)">Highest Min Anomaly</button>
-      <button class="sort-btn" data-sort="name" onClick="setSort('name', this)">A–Z</button>
+      <button class="sort-btn active" data-sort="tmax" onclick="setSort('tmax', this)">Hottest Record</button>
+      <button class="sort-btn" data-sort="tminAsc" onclick="setSort('tminAsc', this)">Coldest Record</button>
+      <button class="sort-btn" data-sort="maxAnom" onclick="setSort('maxAnom', this)">Highest Max Anomaly</button>
+      <button class="sort-btn" data-sort="minAnom" onclick="setSort('minAnom', this)">Highest Min Anomaly</button>
+      <button class="sort-btn" data-sort="name" onclick="setSort('name', this)">A–Z</button>
     </div>
     <div class="records-grid" id="recordsGrid"></div>
   </div>
@@ -449,7 +449,7 @@
 
     async function loadData() {
       try {
-        const tempRes = await fetch('http://lalitmaurya.github.io/js/india_city_temperature.csv');
+        const tempRes = await fetch('india_city_temperature.csv');
         const tempText = await tempRes.text();
 
         let dropped = 0;
@@ -481,7 +481,7 @@
         });
         droppedRows = dropped;
 
-        const metaRes = await fetch('http://lalitmaurya.github.io/js/india_cities_metadata.csv');
+        const metaRes = await fetch('india_cities_metadata.csv');
         const metaText = await metaRes.text();
         const metaData = d3.csvParse(metaText);
 
