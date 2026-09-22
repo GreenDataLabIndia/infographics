@@ -1,0 +1,39 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Energy mix by Country 2015</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <div id="header">Energy mix by country (2015)</div>
+      <div id="controls">
+        <div class="menu">
+          <div>Sort by:</div>
+          <div class="items"></div>
+        </div>
+        <div class="legend">
+          <svg width="70" height="70">
+            <g transform="translate(35,35)">
+              <circle />
+              <text>100%</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div id="chart-wrapper">
+        <svg width="1200" height="1200">
+          <g id="chart"></g>
+        </svg>
+      </div>
+      <div id="footer">
+        <div>Data: <a href="https://datacatalog.worldbank.org/dataset/world-development-indicators">World Bank</a></div>
+        <div><a href="">By Lalit Maurya</a></div>
+      </div>
+    </div>
+
+    <script src="bundle.js"></script>
+  </body>
+</html>
