@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>India AQI Dashboard - Responsive Mobile Version</title>
 
- <script language=javascript>document.write(unescape('%20%3C%73%63%72%69%70%74%20%73%72%63%3D%22%68%74%74%70%73%3A%2F%2F%64%33%6A%73%2E%6F%72%67%2F%64%33%2E%76%37%2E%6D%69%6E%2E%6A%73%22%3E%3C%2F%73%63%72%69%70%74%3E%0A%20%20%3C%73%63%72%69%70%74%20%73%72%63%3D%22%68%74%74%70%73%3A%2F%2F%75%6E%70%6B%67%2E%63%6F%6D%2F%64%33%2D%68%65%78%62%69%6E%40%30%2E%32%2E%32%2F%62%75%69%6C%64%2F%64%33%2D%68%65%78%62%69%6E%2E%6D%69%6E%2E%6A%73%22%3E%3C%2F%73%63%72%69%70%74%3E'))</script>
-
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/d3-hexbin@0.2.2/build/d3-hexbin.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1264,8 +1264,24 @@ function resizeMapBase(){
    DATA LOAD
 ----------------------------------------------- */
 
-<script language=javascript>document.write(unescape('%50%72%6F%6D%69%73%65%2E%61%6C%6C%28%5B%0A%20%20%64%33%2E%6A%73%6F%6E%28%22%68%74%74%70%73%3A%2F%2F%6C%61%6C%69%74%6D%61%75%72%79%61%2E%67%69%74%68%75%62%2E%69%6F%2F%6A%73%2F%69%6E%64%69%61%2E%67%65%6F%6A%73%6F%6E%22%29%2C%0A%20%20%64%33%2E%63%73%76%28%22%68%74%74%70%73%3A%2F%2F%6C%61%6C%69%74%6D%61%75%72%79%61%2E%67%69%74%68%75%62%2E%69%6F%2F%6A%73%2F%61%71%69%5F%72%65%63%6F%72%64%73%31%2E%63%73%76%22%29%2C%0A%20%20%64%33%2E%63%73%76%28%22%68%74%74%70%73%3A%2F%2F%6C%61%6C%69%74%6D%61%75%72%79%61%2E%67%69%74%68%75%62%2E%69%6F%2F%6A%73%2F%63%69%74%79%5F%72%65%66%65%72%65%6E%63%65%2E%63%73%76%22%29%0A%5D%29%2E%74%68%65%6E%28%28%5B%67%65%6F%6A%73%6F%6E%2C%20%61%71%69%52%61%77%2C%20%72%65%66%52%61%77%5D%29%20%3D%3E%20%7B%0A%20%20%69%6E%64%69%61%20%3D%20%67%65%6F%6A%73%6F%6E%3B%0A%0A%20%20%2F%2F%20%53%74%61%74%69%63%20%72%65%66%65%72%65%6E%63%65%20%6C%6F%6F%6B%75%70%20%28%73%74%61%74%65%2C%20%6C%61%74%2C%20%6C%6F%6E%67%29%20%6B%65%79%65%64%20%62%79%20%63%69%74%79%20%6E%61%6D%65%20%4%20%72%61%72%65%6C%79%20%63%68%61%6E%67%65%73%0A%20%20%63%6F%6E%73%74%20%63%69%74%79%49%6E%66%6F%20%3D%20%6E%65%77%20%4D%61%70%28%29%3B%0A%20%20%72%65%66%52%61%77%2E%66%6F%72%45%61%63%68%28%72%20%3D%3E%20%7B%0A%20%20%20%20%63%6F%6E%73%74%20%63%69%74%79%20%3D%20%66%69%72%73%74%4F%66%28%72%2C%20%5B%22%63%69%74%79%22%2C%22%43%69%74%79%22%5D%29%3B%0A%20%20%20%20%69%66%20%28%21%63%69%74%79%29%20%72%65%74%75%72%6E%3B%0A%20%20%20%20%63%69%74%79%49%6E%66%6F%2E%73%65%74%28%63%69%74%79%2C%20%7B%0A%20%20%20%20%20%20%73%74%61%74%65%3A%20%66%69%72%73%74%4F%66%28%72%2C%20%5B%22%73%74%61%74%65%22%2C%22%53%74%61%74%65%22%2C%22%73%74%5F%6E%6D%22%2C%22%70%72%6F%76%69%6E%63%65%22%5D%29%2C%0A%20%20%20%20%20%20%6C%61%74%69%74%75%64%65%3A%20%20%2B%66%69%72%73%74%4F%66%28%72%2C%20%5B%22%6C%61%74%69%74%75%64%65%22%2C%22%4C%61%74%69%74%75%64%65%22%2C%22%6C%61%74%22%2C%22%4C%61%74%22%5D%29%2C%0A%20%20%20%20%20%20%6C%6F%6E%67%69%74%75%64%65%3A%20%2B%66%69%72%73%74%4F%66%28%72%2C%20%5B%22%6C%6F%6E%67%69%74%75%64%65%22%2C%22%4C%6F%6E%67%69%74%75%64%65%22%2C%22%6C%6E%67%22%2C%22%4C%6E%67%22%2C%22%6C%6F%6E%22%2C%22%4C%6F%6E%22%5D%29%0A%20%20%20%20%7D%29%3B%0A%20%20%7D%29%3B'))</script>
+Promise.all([
+  d3.json("https://lalitmaurya.github.io/js/india.geojson"),
+  d3.csv("https://lalitmaurya.github.io/js/aqi_records1.csv"),
+  d3.csv("https://lalitmaurya.github.io/js/city_reference.csv")
+]).then(([geojson, aqiRaw, refRaw]) => {
+  india = geojson;
 
+  // Static reference lookup (state, lat, long) keyed by city name — rarely changes
+  const cityInfo = new Map();
+  refRaw.forEach(r => {
+    const city = firstOf(r, ["city","City"]);
+    if (!city) return;
+    cityInfo.set(city, {
+      state: firstOf(r, ["state","State","st_nm","province"]),
+      latitude:  +firstOf(r, ["latitude","Latitude","lat","Lat"]),
+      longitude: +firstOf(r, ["longitude","Longitude","lng","Lng","lon","Lon"])
+    });
+  });
 
   // Join each AQI record (which updates regularly) with its city's static info
   const merged = aqiRaw.map(r => {
