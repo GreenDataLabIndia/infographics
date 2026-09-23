@@ -1,0 +1,155 @@
+/* Global */
+body {
+    background-color: #FFFFF7;
+    font-family: 'Open Sans', sans-serif;
+    color: #333;
+    margin: 0;
+    cursor: default;
+}
+
+#wrapper {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    color: #777;
+    transition: opacity 0.3s;
+}
+
+a:hover {
+    opacity: 0.5
+}
+
+
+/* Header */
+#header {
+    font-size: 1.5rem;
+    letter-spacing: -0.03rem;
+    padding: 1rem;
+    text-align: right;
+}
+
+
+/* Controls */
+#controls {
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Menu */
+.menu {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.menu .items {
+    display: flex;
+}
+
+.menu .item {
+    padding: 0 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.menu .item .label {
+    font-size: 1.2rem;
+    padding-left: 0.2rem;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.menu .item.selected .label, .menu .item:hover .label {
+    opacity: 1;
+}
+
+
+/* Legend */
+.legend circle {
+    stroke: #aaa;
+    fill: none;
+}
+
+.legend text {
+    fill: #777;
+    text-anchor: middle;
+	dominant-baseline: middle;
+}
+
+
+/* Circles (menu and chart) */
+circle.renewable {
+    fill: #7FB069;
+}
+
+circle.oilgascoal {
+    fill: none;
+    stroke: #BCB5B2;
+}
+
+circle.hydroelectric {
+    fill: none;
+    stroke: #5EB1BF;
+    stroke-width: 1.25;
+    stroke-dasharray: 3,1;
+}
+
+circle.nuclear {
+    fill: none;
+    stroke: #F6AE2D;
+    stroke-width: 1.25;
+    stroke-dasharray: 4,2;
+}
+
+
+/* Chart */
+.country {
+    pointer-events: all;
+}
+
+.country .label {
+    text-anchor: middle;
+    font-size: 0.75rem;
+    fill: #999;
+    font-weight: 600;
+    transition: fill 0.3s;
+}
+
+.country:hover .label {
+    fill: #333;
+}
+
+
+/* Footer */
+#footer {
+    padding: 1rem 1rem 2rem 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* Popup */
+.popup-center {
+	opacity: 0;
+}
+
+.flourish-popup {
+    pointer-events: none;
+}
+
+.flourish-popup-content {
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.flourish-popup-content h3 {
+    text-align: center;
+    margin: 0.25rem 0;
+}/* CSS Document */
+
