@@ -21,9 +21,9 @@ h1{font-size:clamp(44px,8vw,92px);line-height:1;margin:10px 0;background:linear-
 .btn.alt{background:none;color:var(--ink);border:1px solid var(--line)}
 .cvwrap{position:relative}.cvwrap:before{content:"";position:absolute;inset:-8%;background:radial-gradient(closest-side,rgba(45,212,191,.22),transparent);filter:blur(20px);z-index:0}
 canvas{position:relative;width:100%;height:auto;display:block;border-radius:12px;background:#05080d;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;max-width:1100px;margin:0 auto;padding:10px 5vw}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center}
-.stat b{display:block;font-size:38px;color:var(--b)}.stat span{color:var(--mute);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;max-width:1100px;margin:0 auto;padding:10px 10vw}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:32px;padding:20px;text-align:center}
+.stat b{display:block;font-size:51px;color:var(--b)}.stat span{color:var(--mute);font-size:13px}
 section{max-width:1100px;margin:auto;padding:80px 5vw}
 h2{font-size:clamp(28px,4vw,42px);margin:6px 0 30px;font-weight:700}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
@@ -53,10 +53,10 @@ footer{border-top:1px solid var(--line);text-align:center;padding:60px 5vw;color
 </header>
 
 <div class="stats">
-  <div class="stat"><b data-n="40">0</b><span>Infographics designed</span></div>
+  <div class="stat"><b data-n="500">0</b><span>Infographics designed</span></div>
   <div class="stat"><b data-n="25">0</b><span>Dashboards built</span></div>
-  <div class="stat"><b data-n="5">0</b><span>Years in data</span></div>
-  <div class="stat"><b data-n="1">0</b><span>Book authored</span></div>
+  <div class="stat"><b data-n="20">0</b><span>Years in data</span></div>
+  <div class="stat"><b data-n="7000">0</b><span>Articles written</span></div>
 </div>
 
 <section id="work">
@@ -93,7 +93,7 @@ const roles=['Data Analyst','Infographic Designer','Author & Storyteller'];let r
 (function tick(){const r=roles[ri];ty.textContent=r.slice(0,ci);if(!del&&ci===r.length){del=true;return setTimeout(tick,1400)}if(del&&ci===0){del=false;ri=(ri+1)%roles.length}ci+=del?-1:1;setTimeout(tick,del?40:80)})();
 
 // ---------- portrait: text appears one by one, then twinkles ----------
-const W=800,H=1000,dpr=Math.min(devicePixelRatio||1,2),cv=document.getElementById('cv');cv.width=W*dpr;cv.height=H*dpr;
+const W=1200,H=1500,dpr=Math.min(devicePixelRatio||1,2),cv=document.getElementById('cv');cv.width=W*dpr;cv.height=H*dpr;
 const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
 const mk=document.createElement('canvas');mk.width=W;mk.height=H;const m=mk.getContext('2d',{willReadFrequently:true});
 const prose="Data tells a story when someone listens closely. Every chart begins as a question and ends as a decision. Numbers are quiet until we give them a voice, a shape and a colour. A good analyst is part detective, part designer and part storyteller. Behind every dataset there are people, places and moments waiting to be understood. I turn rows and columns into pictures that people remember. Clarity is the highest form of beauty in an infographic. ";
