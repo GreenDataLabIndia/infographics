@@ -15,9 +15,12 @@ Amritsar,Punjab,31.634,74.8723
 Anantapur,Andhra Pradesh,14.6819,77.6006
 Angul,Odisha,20.84,85.1017
 Ankleshwar,Gujarat,21.6266,73.0006
+Anpara,Uttar Pradesh,24.2,82.7833
 Araria,Bihar,26.1509,87.5216
 Arrah,Bihar,25.5561,84.6636
 Asansol,West Bengal,23.6839,86.9752
+Aurangabad,Maharashtra,19.8762,75.3433
+Aurangabad (Bihar),Bihar,24.7521,84.3742
 Aurangabad (Maharashtra),Maharashtra,19.8762,75.3433
 Baddi,Himachal Pradesh,30.9578,76.7914
 Badlapur,Maharashtra,19.1551,73.2352
@@ -28,6 +31,7 @@ Balasore,Odisha,21.4942,86.9317
 Ballabgarh,Haryana,28.3372,77.322
 Banswara,Rajasthan,23.5461,74.4423
 Baran,Rajasthan,25.1004,76.5124
+Baraut,Uttar Pradesh,29.1019,77.2635
 Barbil,Odisha,22.1042,85.3796
 Bareilly,Uttar Pradesh,28.367,79.4304
 Baripada,Odisha,21.9347,86.7318
@@ -50,6 +54,8 @@ Bhiwandi,Maharashtra,19.3002,73.0629
 Bhiwani,Haryana,28.7975,76.1322
 Bhopal,Madhya Pradesh,23.2599,77.4126
 Bhubaneswar,Odisha,20.2961,85.8245
+Bidar,Karnataka,17.9104,77.5199
+Bihar Sharif,Bihar,25.1982,85.5155
 Bihar sharif,Bihar,25.1994,85.521
 Bikaner,Rajasthan,28.0229,73.3119
 Bilaspur,Chhattisgarh,22.0797,82.1409
@@ -60,11 +66,13 @@ Bulandshahr,Uttar Pradesh,28.4041,77.8498
 Bundi,Rajasthan,25.4305,75.6499
 Buxar,Bihar,25.5657,83.9773
 Byasanagar,Odisha,20.8167,86.1333
+Byrnihat,Meghalaya,26.0333,91.8667
 Byrnihat (Assam),Assam,26.0947,91.8737
 Byrnihat (Meghalaya),Meghalaya,25.97,91.873
 Chamarajanagar,Karnataka,11.9236,76.9391
 Chandigarh,Chandigarh,30.7333,76.7794
 Chandrapur,Maharashtra,19.9615,79.2961
+Charkhi Dadri,Haryana,28.5921,76.2653
 Charkhi dadri,Haryana,28.5921,76.2727
 Chennai,Tamil Nadu,13.0827,80.2707
 Chhal,Chhattisgarh,21.9,82.6
@@ -78,7 +86,9 @@ Coimbatore,Tamil Nadu,11.0168,76.9558
 Cuddalore,Tamil Nadu,11.748,79.7714
 Cuttack,Odisha,20.4625,85.883
 Damoh,Madhya Pradesh,23.8315,79.4421
+Darbhanga,Bihar,26.1542,85.8918
 Dausa,Rajasthan,26.8879,76.3364
+Davanagere,Karnataka,14.4644,75.9218
 Dehradun,Uttarakhand,30.3165,78.0322
 Delhi,Delhi,28.61,77.2
 Dewas,Madhya Pradesh,22.9676,76.0534
@@ -87,6 +97,7 @@ Dharuhera,Haryana,28.2013,76.7994
 Dharwad,Karnataka,15.4589,75.0078
 Dholpur,Rajasthan,26.7016,77.8938
 Dhule,Maharashtra,20.9042,74.7749
+Dindigul,Tamil Nadu,10.3673,77.9803
 Dombivli,Maharashtra,19.2183,73.0864
 Dungarpur,Rajasthan,23.843,73.7147
 Durgapur,West Bengal,23.5204,87.3119
@@ -94,6 +105,7 @@ Eloor,Kerala,10.1333,76.3081
 Eluru,Andhra Pradesh,16.7107,81.0952
 Faridabad,Haryana,28.4089,77.3178
 Fatehabad,Haryana,29.5153,75.4535
+Fatehpur Sikri,Uttar Pradesh,27.0937,77.6671
 Fatehpur sikri,Uttar Pradesh,27.094,77.6613
 Firozabad,Uttar Pradesh,27.1591,78.3958
 Gadag,Karnataka,15.4319,75.635
@@ -103,6 +115,7 @@ Gangtok,Sikkim,27.3389,88.6065
 Gaya,Bihar,24.7955,84.9994
 Ghaziabad,Uttar Pradesh,28.6692,77.4538
 Gorakhpur,Uttar Pradesh,26.7606,83.3732
+Greater Noida,Uttar Pradesh,28.4744,77.504
 Greater noida,Uttar Pradesh,28.4744,77.504
 Gummidipoondi,Tamil Nadu,13.4041,80.1024
 Guntur,Andhra Pradesh,16.3067,80.4365
@@ -113,6 +126,7 @@ Hajipur,Bihar,25.6941,85.2094
 Haldia,West Bengal,22.0257,88.0583
 Hanumangarh,Rajasthan,29.5814,74.3197
 Hapur,Uttar Pradesh,28.73,77.78
+Haveri,Karnataka,14.7951,75.4044
 Hingoli,Maharashtra,19.7173,77.1489
 Hisar,Haryana,29.1492,75.7217
 Howrah,West Bengal,22.5958,88.2636
@@ -141,6 +155,7 @@ Kannur,Kerala,11.8745,75.3704
 Kanpur,Uttar Pradesh,26.4499,80.3319
 Karauli,Rajasthan,26.496,77.0266
 Karnal,Haryana,29.6857,76.9905
+Karur,Tamil Nadu,10.9601,78.0766
 Karwar,Karnataka,14.8137,74.1291
 Kashipur,Uttarakhand,29.2145,78.9622
 Katihar,Bihar,25.5393,87.5701
@@ -152,14 +167,18 @@ Khora,Uttar Pradesh,28.67,77.32
 Khurja,Uttar Pradesh,28.2536,77.8517
 Kishanganj,Bihar,26.0961,87.9451
 Kohima,Nagaland,25.6751,94.1086
+Kolar,Karnataka,13.1357,78.1326
 Kolhapur,Maharashtra,16.705,74.2433
 Kolkata,West Bengal,22.5726,88.3639
+Kollam,Kerala,8.8932,76.6141
+Koppal,Karnataka,15.3547,76.1548
 Korba,Chhattisgarh,22.3595,82.6825
 Kota,Rajasthan,25.2138,75.8648
 Kunjemura,Chhattisgarh,22.07,82.24
 Kurnool,Andhra Pradesh,15.8281,78.0373
 Kurukshetra,Haryana,29.9695,76.8783
 Latur,Maharashtra,18.4088,76.5604
+Leh,Ladakh,34.1526,77.5771
 Lucknow,Uttar Pradesh,26.8467,80.9462
 Ludhiana,Punjab,30.901,75.8573
 Machilipatnam,Andhra Pradesh,16.1875,81.1389
@@ -168,6 +187,7 @@ Madurai,Tamil Nadu,9.9252,78.1198
 Mahad,Maharashtra,18.0818,73.4167
 Maihar,Madhya Pradesh,24.2634,80.7605
 Malegaon,Maharashtra,20.5537,74.5288
+Mandi Gobindgarh,Punjab,30.6643,76.2956
 Mandi gobindgarh,Punjab,30.67,76.296
 Mandideep,Madhya Pradesh,23.1085,77.5375
 Mandikhera,Haryana,27.99,76.68
@@ -178,6 +198,7 @@ Mathura,Uttar Pradesh,27.4924,77.6737
 Meerut,Uttar Pradesh,28.9845,77.7064
 Mehsana,Gujarat,23.588,72.3693
 Milupara,Chhattisgarh,21.9,83.4
+Mira-Bhayandar,Maharashtra,19.2952,72.8544
 Mira-bhayandar,Maharashtra,19.2952,72.8544
 Modinagar,Uttar Pradesh,28.8318,77.5735
 Moradabad,Uttar Pradesh,28.8386,78.7733
@@ -188,6 +209,7 @@ Muzaffarnagar,Uttar Pradesh,29.4727,77.7085
 Muzaffarpur,Bihar,26.1225,85.3906
 Mysuru,Karnataka,12.2958,76.6394
 Nagaon,Assam,26.3509,92.6839
+Nagapattinam,Tamil Nadu,10.7672,79.8449
 Nagaur,Rajasthan,27.202,73.7339
 Nagpur,Maharashtra,21.1458,79.0882
 Naharlagun,Arunachal Pradesh,27.1041,93.6953
@@ -196,32 +218,42 @@ Nanded,Maharashtra,19.1383,77.321
 Nandesari,Gujarat,22.38,73.15
 Narnaul,Haryana,28.0451,76.1077
 Nashik,Maharashtra,19.9975,73.7898
+Navi Mumbai,Maharashtra,19.033,73.0297
 Navi mumbai,Maharashtra,19.033,73.0297
+Nayagarh,Odisha,20.1288,85.0958
 Nellore,Andhra Pradesh,14.4426,79.9865
 Noida,Uttar Pradesh,28.5355,77.391
+Ooty,Tamil Nadu,11.4064,76.6932
 Pali,Rajasthan,25.7711,73.3234
 Palwal,Haryana,28.1447,77.326
 Pampore,Jammu and Kashmir,33.99,74.92
 Panchgaon,Haryana,28.38,76.9
 Panchkula,Haryana,30.6942,76.8606
 Panipat,Haryana,29.3909,76.9635
+Paradeep,Odisha,20.3165,86.6114
 Parbhani,Maharashtra,19.2704,76.7602
 Patiala,Punjab,30.3398,76.3869
 Patna,Bihar,25.5941,85.1376
+Perundurai,Tamil Nadu,11.2753,77.5836
+Pimpri-Chinchwad,Maharashtra,18.6298,73.7997
 Pimpri-chinchwad,Maharashtra,18.6298,73.7997
 Pithampur,Madhya Pradesh,22.6141,75.682
 Pratapgarh,Uttar Pradesh,25.8988,81.9412
 Prayagraj,Uttar Pradesh,25.4358,81.8463
 Puducherry,Puducherry,11.9416,79.8083
+Pudukottai,Tamil Nadu,10.3833,78.8001
 Pune,Maharashtra,18.5204,73.8567
 Purnia,Bihar,25.7771,87.4753
 Raebareli,Uttar Pradesh,26.2309,81.2338
+Raichur,Karnataka,16.216,77.3566
 Raipur,Chhattisgarh,21.2514,81.6296
 Rairangpur,Odisha,22.2667,86.1667
 Rajamahendravaram,Andhra Pradesh,17.0005,81.804
+Rajgir,Bihar,25.0285,85.421
 Rajkot,Gujarat,22.3039,70.8022
 Rajsamand,Rajasthan,25.07,73.88
 Ramanagara,Karnataka,12.7218,77.2817
+Ramanathapuram,Tamil Nadu,9.3639,78.8395
 Ratlam,Madhya Pradesh,23.3315,75.0367
 Rishikesh,Uttarakhand,30.0869,78.2676
 Rohtak,Haryana,28.8955,76.6066
@@ -229,11 +261,13 @@ Rourkela,Odisha,22.2604,84.8536
 Rupnagar,Punjab,30.9685,76.5262
 Sagar,Madhya Pradesh,23.8388,78.7378
 Saharsa,Bihar,25.8804,86.6
+Salem,Tamil Nadu,11.6643,78.146
 Samastipur,Bihar,25.8622,85.7796
 Sangli,Maharashtra,16.8524,74.5815
 Sasaram,Bihar,24.95,84.02
 Satara,Maharashtra,17.6805,74.0183
 Satna,Madhya Pradesh,24.5854,80.8322
+Sawai Madhopur,Rajasthan,26.0173,76.3519
 Sawai madhopur,Rajasthan,26.0173,76.35
 Shamli,Uttar Pradesh,29.45,77.31
 Shillong,Meghalaya,25.5788,91.8933
@@ -244,24 +278,32 @@ Siliguri,West Bengal,26.7271,88.3953
 Singrauli,Madhya Pradesh,24.1994,82.6753
 Sirohi,Rajasthan,24.885,72.8608
 Sirsa,Haryana,29.5321,75.028
+Sivasagar,Assam,26.9826,94.6425
 Siwan,Bihar,26.2196,84.3562
 Solapur,Maharashtra,17.6599,75.9064
 Sonipat,Haryana,28.9931,77.0151
+Sri Ganganagar,Rajasthan,29.9094,73.88
+Sri Vijaya Puram,Andaman and Nicobar Islands,11.6234,92.7265
 Sri ganganagar,Rajasthan,29.9094,73.88
+Srikakulam,Andhra Pradesh,18.2949,83.8938
 Srinagar,Jammu and Kashmir,34.0837,74.7973
+Suakati,Odisha,20.95,86.0333
 Surat,Gujarat,21.1702,72.8311
 Talcher,Odisha,20.95,85.23
 Tensa,Odisha,22.05,84.92
 Thane,Maharashtra,19.2183,72.9781
+Thanjavur,Tamil Nadu,10.787,79.1378
 Thiruvananthapuram,Kerala,8.5241,76.9366
 Thoothukudi,Tamil Nadu,8.7642,78.1348
 Thrissur,Kerala,10.5276,76.2144
 Tirumala,Andhra Pradesh,13.6833,79.3474
 Tirupati,Andhra Pradesh,13.6288,79.4192
+Tirupur,Tamil Nadu,11.1085,77.3411
 Tonk,Rajasthan,26.1652,75.7912
 Tumakuru,Karnataka,13.3379,77.1022
 Tumidih,Chhattisgarh,22.3,82.6
 Udaipur,Rajasthan,24.5854,73.7125
+Udupi,Karnataka,13.3409,74.7421
 Ujjain,Madhya Pradesh,23.1793,75.7849
 Ulhasnagar,Maharashtra,19.2215,73.1645
 Vadodara,Gujarat,22.3072,73.1812
@@ -271,6 +313,7 @@ Vatva,Gujarat,22.97,72.65
 Vijayapura,Karnataka,16.8302,75.71
 Vijayawada,Andhra Pradesh,16.5062,80.648
 Virar,Maharashtra,19.4559,72.8107
+Virudhunagar,Tamil Nadu,9.568,77.9624
 Visakhapatnam,Andhra Pradesh,17.6868,83.2185
 Vrindavan,Uttar Pradesh,27.5806,77.7006
 Yadgir,Karnataka,16.7691,77.1378
