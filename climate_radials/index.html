@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>India Weather Radials</title>
+<meta name="description" content="A year of daily temperature and rainfall in ten Indian cities, drawn as interactive radial charts.">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-alt:#f2f5f8;
+    --bg-deep:#e8eef4;
+    --text:#26333f;
+    --muted:#6b7b8c;
+    --line:rgba(30,50,70,.14);
+    --rain:#2f8fdc;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+  /* top bar */
+  .top{position:absolute;inset:0 0 auto 0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:22px 32px}
+  .top .brand{font-weight:800;font-size:17px;letter-spacing:.2px;text-decoration:none}
+  .top nav a{margin-left:22px;font-size:13px;font-weight:700;text-decoration:none;color:var(--muted)}
+  .top nav a:hover,.top nav a:focus-visible{color:var(--text)}
+
+  /* hero */
+  .hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;
+    background:radial-gradient(1200px 700px at 80% 40%,#dde9f3 0%,#ffffff 65%)}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding-top:80px;padding-bottom:40px;width:100%}
+  .hero h1{font-size:clamp(40px,6.4vw,84px);line-height:.98;margin:0 0 22px;font-weight:800;letter-spacing:-1.5px}
+  .hero p{font-size:clamp(17px,1.8vw,22px);color:#4b5b6b;max-width:30em;margin:0 0 30px}
+  .btn{display:inline-block;padding:11px 22px;border:2px solid var(--text);border-radius:3px;font-weight:700;font-size:14px;text-decoration:none}
+  .btn:hover,.btn:focus-visible{background:var(--text);color:var(--bg)}
+  #heroRadial{width:100%;max-width:620px;justify-self:center;aspect-ratio:1}
+
+  section{padding:88px 0}
+  section.alt{background:var(--bg-alt)}
+  h2{font-size:clamp(28px,3.6vw,44px);line-height:1.1;margin:0 0 20px;font-weight:800;letter-spacing:-.8px;max-width:20em}
+  h3{margin:0;font-size:20px;font-weight:800}
+  .lead{font-size:19px;color:#4b5b6b;max-width:40em}
+
+  /* legend */
+  .help{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:48px}
+  .help svg{width:100%;max-width:230px;display:block;margin-bottom:16px}
+  .help p{margin:0;color:#4b5b6b;font-size:15px}
+  .help strong{color:var(--text)}
+  .scale{margin-top:56px;max-width:640px}
+  .scale .bar{height:14px;border-radius:2px;margin-bottom:8px}
+  .scale .ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+  .scale .cap{font-size:14px;color:#4b5b6b;margin-bottom:10px}
+
+  /* city grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:56px 40px;margin-top:48px}
+  .city{min-width:0}
+  .city button.chart{display:block;width:100%;padding:0;background:none;border:0;cursor:zoom-in;color:inherit}
+  .city svg{width:100%;height:auto;display:block;touch-action:pan-y}
+  .city h3{margin-top:14px}
+  .city .region{color:var(--muted);font-size:14px;margin-bottom:6px}
+  .city .note{font-size:14px;color:#4b5b6b;margin:0 0 12px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;border-top:1px solid var(--line);padding-top:10px;font-size:12px;color:var(--muted)}
+  .stats b{display:block;font-size:16px;color:var(--text);font-weight:700}
+  .err{color:#ff8a80;font-size:14px;padding:30px 0}
+
+  /* scale toggle */
+  .toggle{display:inline-flex;margin-top:28px;border:2px solid var(--text);border-radius:3px;overflow:hidden}
+  .toggle button{background:none;border:0;padding:10px 18px;font:700 14px inherit;font-family:inherit;color:var(--text);cursor:pointer}
+  .toggle button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+
+  /* dialog */
+  dialog{width:min(860px,96vw);max-height:96vh;padding:24px;border:1px solid var(--line);border-radius:6px;background:var(--bg-deep);color:var(--text);overflow:auto}
+  dialog::backdrop{background:rgba(30,45,60,.55)}
+  dialog .bar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  dialog .close{background:none;border:2px solid var(--muted);color:var(--text);border-radius:3px;padding:6px 14px;font-weight:700;cursor:pointer}
+  dialog .close:hover,dialog .close:focus-visible{border-color:var(--text)}
+  dialog svg{width:100%;height:auto;display:block}
+
+  /* add city */
+  pre{background:var(--bg-deep);border:1px solid var(--line);border-radius:4px;padding:16px;overflow:auto;font-size:13px;color:#26333f}
+  code{font-family:ui-monospace,Menlo,Consolas,monospace}
+  ol.steps{padding-left:20px;color:#4b5b6b;max-width:44em}
+  ol.steps li{margin-bottom:8px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+
+  footer{padding:40px 0;background:var(--bg-deep);color:var(--muted);font-size:13px}
+
+  :focus-visible{outline:2px solid var(--rain);outline-offset:3px}
+
+  @media (max-width:820px){
+    .hero .wrap{grid-template-columns:1fr}
+    #heroRadial{max-width:420px}
+    .help,.two{grid-template-columns:1fr}
+    .top{padding:18px 20px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="top">
+    <a class="brand" href="#top">India Weather Radials</a>
+    <nav><a href="#about">About</a><a href="#cities">Cities</a><a href="#data">Why Climate Data Matters</a></nav>
+  </div>
+  <div class="wrap">
+    <div>
+      <h1>India Weather Radials</h1>
+      <p>A year of heat, cold and rain in ten Indian cities. One line for every day.</p>
+      <a class="btn" href="#cities">See the cities</a>
+    </div>
+    <svg id="heroRadial" role="img" aria-label="Radial chart of a year of daily temperatures"></svg>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2>Weather is more than numbers. It sets the rhythm of every day.</h2>
+    <p class="lead">Each radial shows the climate of one city and the actual weather of every day in a single picture. You can see the pre-monsoon heat in Jaipur, the monsoon in Mumbai and the freezing nights in Leh at a glance. Hover over a chart to read any single day. Click it to open a larger view.</p>
+
+    <div class="help">
+      <div>
+        <svg id="helpTemp" viewBox="0 0 230 230" role="img" aria-label="How temperature is drawn"></svg>
+        <p><strong>Temperature line.</strong> The closer a line sits to the centre, the colder the day's minimum. The further out it reaches, the hotter the maximum. The colour is the daily mean.</p>
+      </div>
+      <div>
+        <svg id="helpRain" viewBox="0 0 230 230" role="img" aria-label="How rainfall is drawn"></svg>
+        <p><strong>Rainfall.</strong> Rain is a blue circle placed on the day's temperature line. More rain means a bigger circle.</p>
+      </div>
+      <div>
+        <svg id="helpMonths" viewBox="0 0 230 230" role="img" aria-label="How the year is laid out"></svg>
+        <p><strong>365 lines.</strong> One for each day of the year. January 1 is at the top (12 o'clock) and days continue clockwise.</p>
+      </div>
+    </div>
+
+    <div class="scale">
+      <div class="cap">Daily mean temperature, same scale for every city</div>
+      <div class="bar" id="scaleBar"></div>
+      <div class="ticks" id="scaleTicks"></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="cities">
+  <div class="wrap">
+    <h2>The cities in detail</h2>
+    <p class="lead">By default each radial is stretched to fill its circle so every city's pattern stands out. Colours always use one shared temperature scale. Switch to “Same scale for all” to compare the lengths of the lines between cities as well.</p>
+    <div class="toggle" role="group" aria-label="Radial scale">
+      <button data-fit="1" aria-pressed="true">Fit each city</button>
+      <button data-fit="0" aria-pressed="false">Same scale for all</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="wrap">
+    <h2>Why Climate Data Matters</h2>
+    <div class="two">
+      <div>
+        <p>Climate data is essential for understanding changing weather patterns, seasonal variations, and the growing risks associated with extreme heat and rainfall. By transforming daily temperature and rainfall data into interactive visualisations, this project makes complex climate information easier to understand and compare across Indian cities. It helps bridge the gap between raw data and public understanding, supporting climate awareness, evidence-based reporting, and informed discussions on climate resilience.</p>
+      </div>
+      <div>
+        The project is designed to support the integration, organisation, and visualisation of city-level climate data. Its flexible data structure enables the addition of new cities and the updating of datasets, helping expand the scope of comparative climate analysis. By presenting temperature and rainfall patterns through interactive radial visualisations, the project makes complex climate information easier to explore, interpret, and communicate to researchers, journalists, and the wider public.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+   An interactive climate visualisation project by &copy;Lalit Maurya, exploring temperature and rainfall patterns across Indian cities through data-driven storytelling.
+  </div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="bar"><h3 id="dlgTitle"></h3><button class="close" id="dlgClose">Close</button></div>
+  <div id="dlgSub" style="color:var(--muted);font-size:14px;margin-bottom:8px"></div>
+  <svg id="dlgSvg"></svg>
+</dialog>
+
+<script src="d3.min.js"></script>
+<script>
+/* ============ Settings you may want to tweak ============ */
+const CITIES_FILE = "cities.csv";
+const T_MIN = -15, T_MAX = 45;          // temperature range of the radial (°C), shared by all cities
+const RAIN_SCALE = 0.009;               // bigger number = bigger rain circles
+/* ======================================================== */
+
+const COLOR_STOPS = [
+  [-15,"#5a4fcf"],[-5,"#3f7cf0"],[5,"#36b6e8"],[15,"#45c47a"],
+  [24,"#f2c014"],[31,"#fb9b32"],[38,"#ee4035"],[45,"#a8102f"]
+];
+const color = d3.scaleLinear()
+  .domain(COLOR_STOPS.map(d => d[0])).range(COLOR_STOPS.map(d => d[1]))
+  .interpolate(d3.interpolateRgb).clamp(true);
+
+let FIT = true;           // true = each city fills its own radial; false = same scale for all
+const store = [];
+let heroItem = null;
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmtDate = d3.timeFormat("%-d %B");
+const TAU = Math.PI * 2;
+
+/* ---------- data loading ---------- */
+function parseRows(rows){
+  const out = rows.map(d => {
+    const date = new Date(d.date + "T00:00:00");
+    const tmin = +d.tmin, tmax = +d.tmax;
+    return {
+      date, tmin, tmax,
+      tmean: d.tmean !== undefined && d.tmean !== "" ? +d.tmean : (tmin + tmax) / 2,
+      precip: +d.precip || 0
+    };
+  }).filter(d => !isNaN(d.date) && !isNaN(d.tmin) && !isNaN(d.tmax));
+  out.sort((a, b) => a.date - b.date);
+  const y = out[0].date.getFullYear();
+  const jan1 = new Date(y, 0, 1);
+  out.forEach(d => d.doy = Math.round((d.date - jan1) / 864e5));
+  out.yearDays = (new Date(y + 1, 0, 1) - jan1) / 864e5;
+  return out;
+}
+
+/* ---------- the radial ---------- */
+function drawRadial(svgEl, data, opts = {}){
+  const large = !!opts.large;
+  const S = opts.size || 360;
+  const margin = large ? 46 : 30;
+  const R = S / 2 - margin;
+  const r0 = R * 0.2;
+  const dom = opts.fit ? [Math.floor((d3.min(data, d => d.tmin) - 2) / 5) * 5, Math.ceil((d3.max(data, d => d.tmax) + 1) / 5) * 5] : [T_MIN, T_MAX];
+  const rad = d3.scaleLinear().domain(dom).range([r0, R]);
+  const N = data.yearDays;
+  const ang = doy => (doy + 0.5) / N * TAU;
+  const px = (r, a) => r * Math.sin(a);
+  const py = (r, a) => -r * Math.cos(a);
+
+  const svg = d3.select(svgEl);
+  svg.selectAll("*").remove();
+  svg.attr("viewBox", `${-S/2} ${-S/2} ${S} ${S}`).attr("role", "img")
+     .attr("aria-label", `${opts.title || "City"} daily temperature and rainfall radial`);
+
+  // reference rings
+  const rings = d3.ticks(dom[0], dom[1], large ? 6 : 5).filter(t => t > dom[0]);
+  const g0 = svg.append("g");
+  g0.selectAll("circle").data(rings).join("circle")
+    .attr("r", rad).attr("fill", "none").attr("stroke", "rgba(30,50,70,.16)").attr("stroke-width", .7);
+  if (large){
+    g0.selectAll("text").data(rings).join("text")
+      .attr("x", 3).attr("y", d => -rad(d) - 2).attr("font-size", 10).attr("fill", "#6b7b8c").text(d => d + "°");
+  }
+
+  // month ticks + labels
+  const starts = MONTHS.map((_, m) => Math.round((new Date(data[0].date.getFullYear(), m, 1) - new Date(data[0].date.getFullYear(), 0, 1)) / 864e5));
+  starts.push(N);
+  const g1 = svg.append("g");
+  starts.slice(0, 12).forEach((s, m) => {
+    const a = s / N * TAU;
+    g1.append("line").attr("x1", px(r0 - 2, a)).attr("y1", py(r0 - 2, a))
+      .attr("x2", px(R + 6, a)).attr("y2", py(R + 6, a))
+      .attr("stroke", "rgba(30,50,70,.10)").attr("stroke-width", .7);
+    const mid = (s + starts[m + 1]) / 2 / N * TAU;
+    g1.append("text").attr("x", px(R + (large ? 22 : 16), mid)).attr("y", py(R + (large ? 22 : 16), mid))
+      .attr("text-anchor", "middle").attr("dominant-baseline", "middle")
+      .attr("font-size", large ? 12 : 10).attr("font-weight", 700).attr("fill", "#6b7b8c")
+      .text(large ? MONTHS[m] : MONTHS[m][0]);
+  });
+
+  // temperature lines
+  const lw = Math.max(1.6, TAU * (r0 + 0.65 * (R - r0)) / N * 1.3);
+  const gDays = svg.append("g").attr("stroke-linecap", "round");
+  gDays.selectAll("line").data(data).join("line")
+    .attr("x1", d => px(rad(d.tmin), ang(d.doy))).attr("y1", d => py(rad(d.tmin), ang(d.doy)))
+    .attr("x2", d => px(rad(d.tmax), ang(d.doy))).attr("y2", d => py(rad(d.tmax), ang(d.doy)))
+    .attr("stroke", d => color(d.tmean)).attr("stroke-width", lw);
+
+  // rain circles
+  const rr = p => Math.min(R * 0.13, Math.sqrt(p) * R * RAIN_SCALE * (large ? 1 : 1));
+  svg.append("g").selectAll("circle").data(data.filter(d => d.precip >= 0.5)).join("circle")
+    .attr("cx", d => px(rad((d.tmin + d.tmax) / 2), ang(d.doy)))
+    .attr("cy", d => py(rad((d.tmin + d.tmax) / 2), ang(d.doy)))
+    .attr("r", d => Math.max(.9, rr(d.precip)))
+    .attr("fill", "rgba(47,143,220,.26)").attr("stroke", "#2f8fdc").attr("stroke-width", .7);
+
+  // centre readout
+  const ctr = svg.append("g").attr("text-anchor", "middle").attr("pointer-events", "none");
+  const t1 = ctr.append("text").attr("y", -6).attr("font-weight", 800).attr("fill", "#26333f").attr("font-size", large ? 20 : 12);
+  const t2 = ctr.append("text").attr("y", large ? 14 : 9).attr("fill", "#4b5b6b").attr("font-size", large ? 13 : 10);
+  const t3 = ctr.append("text").attr("y", large ? 31 : 21).attr("fill", "#2f8fdc").attr("font-size", large ? 13 : 10);
+  const idle = () => {
+    t1.text(opts.title || ""); t2.text(data[0].date.getFullYear()); t3.text("");
+    hi.attr("opacity", 0);
+  };
+
+  // hover highlight
+  const hi = svg.append("g").attr("pointer-events", "none").attr("opacity", 0);
+  const hl = hi.append("line").attr("stroke", "#26333f").attr("stroke-width", lw + 2.4).attr("stroke-linecap", "round");
+  const hl2 = hi.append("line").attr("stroke-linecap", "round").attr("stroke-width", lw);
+
+  const byDoy = new Map(data.map(d => [d.doy, d]));
+  const overlay = svg.append("circle").attr("r", R + margin).attr("fill", "transparent").style("cursor", large ? "default" : "zoom-in");
+  function show(event){
+    const [x, y] = d3.pointer(event, svgEl);
+    const dist = Math.hypot(x, y);
+    if (dist < r0 * .5){ idle(); return; }
+    let a = Math.atan2(x, -y); if (a < 0) a += TAU;
+    const d = byDoy.get(Math.min(N - 1, Math.floor(a / TAU * N)));
+    if (!d){ idle(); return; }
+    const A = ang(d.doy);
+    hl.attr("x1", px(rad(d.tmin), A)).attr("y1", py(rad(d.tmin), A)).attr("x2", px(rad(d.tmax), A)).attr("y2", py(rad(d.tmax), A));
+    hl2.attr("x1", px(rad(d.tmin), A)).attr("y1", py(rad(d.tmin), A)).attr("x2", px(rad(d.tmax), A)).attr("y2", py(rad(d.tmax), A))
+       .attr("stroke", color(d.tmean));
+    hi.attr("opacity", 1);
+    t1.text(fmtDate(d.date));
+    t2.text(`${d.tmin.toFixed(0)}° to ${d.tmax.toFixed(0)}°C`);
+    t3.text(d.precip >= 0.1 ? `${d.precip.toFixed(1)} mm rain` : "dry");
+  }
+  overlay.on("pointermove", show).on("pointerdown", show).on("pointerleave", idle);
+  idle();
+}
+
+/* ---------- stats ---------- */
+function stats(data){
+  const hot = d3.greatest(data, d => d.tmax), cold = d3.least(data, d => d.tmin);
+  return [
+    ["Mean", d3.mean(data, d => d.tmean).toFixed(1) + "°"],
+    ["Hottest", hot.tmax.toFixed(0) + "°"],
+    ["Coldest", cold.tmin.toFixed(0) + "°"],
+    ["Rain", Math.round(d3.sum(data, d => d.precip)) + " mm"]
+  ];
+}
+
+/* ---------- page ---------- */
+const dlg = document.getElementById("dlg");
+document.getElementById("dlgClose").onclick = () => dlg.close();
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+function paint(it){
+  drawRadial(it.btn.querySelector("svg"), it.data, { size: 360, title: it.c.city, fit: FIT });
+}
+function paintHero(){
+  if (heroItem) drawRadial(document.getElementById("heroRadial"), heroItem.data, { size: 600, large: true, title: heroItem.c.city, fit: FIT });
+}
+function setFit(v){
+  FIT = v; store.forEach(paint); paintHero();
+  document.querySelectorAll(".toggle button").forEach(b => b.setAttribute("aria-pressed", (b.dataset.fit === "1") === FIT));
+}
+
+function openLarge(c, data){
+  document.getElementById("dlgTitle").textContent = `${c.city}, ${c.region}`;
+  document.getElementById("dlgSub").textContent = c.note || "";
+  drawRadial(document.getElementById("dlgSvg"), data, { size: 760, large: true, title: c.city, fit: FIT });
+  dlg.showModal();
+}
+
+async function loadCity(c, card){
+  try{
+    const data = parseRows(await d3.csv(c.file));
+    if (!data.length) throw new Error("no rows");
+    const btn = card.querySelector(".chart");
+    const item = { c, data, btn }; store.push(item); paint(item);
+    btn.addEventListener("click", () => openLarge(c, data));
+    card.querySelector(".stats").innerHTML = stats(data).map(([k, v]) => `<div><b>${v}</b>${k}</div>`).join("");
+    return data;
+  }catch(err){
+    card.innerHTML = `<div class="err">Could not load <code>${c.file}</code> for ${c.city}. Check the file name in cities.csv and that the CSV has the columns date, tmin, tmax, precip.</div>`;
+  }
+}
+
+async function init(){
+  buildScale();
+  buildHelp();
+  const cities = await d3.csv(CITIES_FILE);
+  const grid = document.getElementById("grid");
+  const cards = cities.map(c => {
+    const el = document.createElement("article");
+    el.className = "city";
+    el.innerHTML = `
+      <button class="chart" aria-label="Open larger radial for ${c.city}"><svg></svg></button>
+      <h3>${c.city}</h3>
+      <div class="region">${c.region}</div>
+      <p class="note">${c.note || ""}</p>
+      <div class="stats"></div>`;
+    grid.appendChild(el);
+    return el;
+  });
+  const all = await Promise.all(cities.map((c, i) => loadCity(c, cards[i])));
+  const hero = all.find(Boolean);
+  const cHero = cities[all.findIndex(Boolean)];
+  if (hero){ heroItem = { c: cHero, data: hero }; paintHero(); }
+  document.querySelectorAll(".toggle button").forEach(b => b.onclick = () => setFit(b.dataset.fit === "1"));
+}
+
+function buildScale(){
+  const lo = COLOR_STOPS[0][0], hi = COLOR_STOPS[COLOR_STOPS.length - 1][0];
+  document.getElementById("scaleBar").style.background =
+    `linear-gradient(to right, ${COLOR_STOPS.map(([t, c]) => `${c} ${(t - lo) / (hi - lo) * 100}%`).join(",")})`;
+  document.getElementById("scaleTicks").innerHTML =
+    [-10, 0, 10, 20, 30, 40].map(t => `<span>${t}°C</span>`).join("");
+}
+
+/* small explanatory diagrams */
+function buildHelp(){
+  const C = 115, r0 = 30, R = 100;
+  const rad = d3.scaleLinear().domain([T_MIN, T_MAX]).range([r0, R]);
+  const ring = (g) => [0, 10, 20, 30, 40].forEach(t =>
+    g.append("circle").attr("cx", C).attr("cy", C).attr("r", rad(t)).attr("fill", "none").attr("stroke", "rgba(30,50,70,.18)"));
+  const txt = (g, x, y, s, o = {}) => g.append("text").attr("x", x).attr("y", y).attr("font-size", o.size || 11)
+    .attr("fill", o.fill || "#4b5b6b").attr("text-anchor", o.anchor || "start").attr("font-weight", o.w || 400).text(s);
+
+  // temperature
+  let g = d3.select("#helpTemp"); ring(g);
+  const a = 0.55 * Math.PI;
+  const line = (ang, lo, hi, col, w) => g.append("line").attr("stroke-linecap", "round").attr("stroke", col).attr("stroke-width", w)
+    .attr("x1", C + rad(lo) * Math.sin(ang)).attr("y1", C - rad(lo) * Math.cos(ang))
+    .attr("x2", C + rad(hi) * Math.sin(ang)).attr("y2", C - rad(hi) * Math.cos(ang));
+  line(a, 14, 34, color(24), 5);
+  [[0.25,8,30],[0.32,9,31],[0.4,10,33],[0.47,12,33],[0.62,15,35],[0.7,16,34]].forEach(([k, lo, hi]) => line(k * Math.PI, lo, hi, color((lo + hi) / 2), 3));
+  txt(g, C + rad(34) * Math.sin(a) + 6, C - rad(34) * Math.cos(a) + 4, "max", { fill: "#26333f", w: 700 });
+  txt(g, C + rad(14) * Math.sin(a) + 2, C - rad(14) * Math.cos(a) + 15, "min", { fill: "#26333f", w: 700 });
+  txt(g, C + 3, C - rad(40) - 3, "40°"); txt(g, C + 3, C - rad(20) - 3, "20°");
+
+  // rain
+  g = d3.select("#helpRain"); ring(g);
+  const k = Math.sqrt;
+  [[5, 58, 100],[25, 108, 100],[100, 168, 100]].forEach(([p, x, y]) => {
+    const r = Math.min(R * 0.13, k(p) * R * RAIN_SCALE * 2.2);
+    g.append("circle").attr("cx", x).attr("cy", y + 22).attr("r", r).attr("fill", "rgba(47,143,220,.26)").attr("stroke", "#2f8fdc");
+    txt(g, x, y + 60, p + " mm", { anchor: "middle" });
+  });
+  txt(g, 115, 50, "bigger circle = more rain", { anchor: "middle", fill: "#26333f", w: 700 });
+
+  // months
+  g = d3.select("#helpMonths");
+  [0, 90, 180, 270].forEach((deg, i) => {
+    const r = deg * Math.PI / 180;
+    g.append("line").attr("x1", C + (r0 - 2) * Math.sin(r)).attr("y1", C - (r0 - 2) * Math.cos(r))
+      .attr("x2", C + R * Math.sin(r)).attr("y2", C - R * Math.cos(r)).attr("stroke", "rgba(30,50,70,.25)");
+  });
+  for (let d = 0; d < 365; d += 3){
+    const r = d / 365 * TAU;
+    g.append("line").attr("stroke", color(-2 + 28 * (0.5 - 0.5 * Math.cos(r - 0.5))))
+      .attr("stroke-width", 1.6).attr("stroke-linecap", "round")
+      .attr("x1", C + 50 * Math.sin(r)).attr("y1", C - 50 * Math.cos(r))
+      .attr("x2", C + 82 * Math.sin(r)).attr("y2", C - 82 * Math.cos(r));
+  }
+  txt(g, C, 12, "1 Jan", { anchor: "middle", fill: "#26333f", w: 700 });
+  txt(g, 222, C + 4, "Apr", { anchor: "end" }); txt(g, C, 226, "Jul", { anchor: "middle" }); txt(g, 8, C + 4, "Oct");
+  g.append("path").attr("d", `M ${C + 14} ${C - 12} A 18 18 0 0 1 ${C + 18} ${C + 12}`).attr("fill", "none").attr("stroke", "#26333f").attr("stroke-width", 1.4);
+  g.append("path").attr("d", `M ${C + 14} ${C + 11} l 4 2 l 1 -5`).attr("fill", "none").attr("stroke", "#26333f").attr("stroke-width", 1.4);
+  txt(g, C - 20, C + 4, "clockwise", { size: 9, anchor: "end" });
+}
+
+init();
+</script>
+</body>
+</html>

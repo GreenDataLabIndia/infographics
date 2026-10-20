@@ -1,0 +1,11 @@
+id,city,region,year,file,note
+mumbai,Mumbai,Maharashtra,2025,data/mumbai.csv,Warm all year with a violent monsoon from June to September
+delhi,Delhi,NCT of Delhi,2025,data/delhi.csv,Cold foggy winters and 40°C summers before the monsoon
+bengaluru,Bengaluru,Karnataka,2025,data/bengaluru.csv,A mild plateau climate with a long gentle rainy season
+chennai,Chennai,Tamil Nadu,2025,data/chennai.csv,Hot and humid with rain arriving late from the northeast monsoon
+kolkata,Kolkata,West Bengal,2025,data/kolkata.csv,Humid heat in spring then heavy monsoon rain
+hyderabad,Hyderabad,Telangana,2025,data/hyderabad.csv,Dry heat in April and May with a moderate monsoon
+jaipur,Jaipur,Rajasthan,2025,data/jaipur.csv,A semi-arid city with sharp summer peaks
+surat,Surat,Gujarat,2025,data/surat.csv,Dry for most of the year then intense monsoon downpours
+shimla,Shimla,Himachal Pradesh,2025,data/shimla.csv,A cool hill station with cold winters and a wet monsoon
+leh,Leh,Ladakh,2025,data/leh.csv,A cold desert where winter nights fall far below zero
