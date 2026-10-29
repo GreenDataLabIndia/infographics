@@ -158,7 +158,7 @@ function loadSim(){
     CU[k]=u;CV[k]=v;CT[k]=-30+60*Math.pow(Math.max(0,Math.cos(f)),1.3);
     CP[k]=1013+7*g(a-30,9)-7*g(a-62,10)-4*g(la,8)+3*Math.sin(2*l);
   }));
-  setStatus('sim','Demo wind pattern','offline: open this file in a browser with internet for live data');
+  setStatus('sim','Wind Patterns — ','Offline: Once the live data loads, view the actual data.');
 }
 function setStatus(c,s,u){$('st').className='pn '+c;$('src').textContent=s;$('upd').textContent=u}
 async function refresh(){
