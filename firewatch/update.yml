@@ -1,0 +1,18 @@
+name: update-fire-data
+on:
+  schedule: [{cron: "17 * * * *"}]   # hourly
+  workflow_dispatch:
+permissions: {contents: write}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install pandas geopandas requests pyogrio shapely
+      - run: python fetch_fires.py
+        env: {FIRMS_MAP_KEY: "${{ secrets.FIRMS_MAP_KEY }}"}
+      - run: |
+          git config user.name "fire-bot"; git config user.email "bot@users.noreply.github.com"
+          git add data; git diff --cached --quiet || (git commit -m "data update" && git push)
