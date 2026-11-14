@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>India Fire Watch – live active fire analytics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--tx:#1d1d1b;--mut:#6b6a66;--bd:#e2e0da;--ac:#d9480f}
+@media (prefers-color-scheme:dark){:root{--bg:#141413;--card:#1e1e1c;--tx:#ecebe6;--mut:#9a988f;--bd:#33322e;--ac:#ff7a3d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:12px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+h1{font-size:19px;margin:0}h1 span{color:var(--ac)}
+#badge{font-size:12px;padding:4px 10px;border-radius:99px;border:1px solid var(--bd);background:var(--card)}
+#badge i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#2f9e44;animation:p 1.6s infinite}
+@keyframes p{50%{opacity:.3}}
+.bar{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 10px}
+select,button{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:7px;padding:6px 10px;font:inherit}button{cursor:pointer}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;min-width:0}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin:0 0 8px;font-weight:600}
+#ins{margin:0 18px 10px;border-left:4px solid var(--ac)}#ins p{margin:3px 0;font-size:15px}#ins b{color:var(--ac)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:0 18px 10px}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}.kpi b{display:block;font-size:24px}.kpi small{color:var(--mut)}
+.up{color:#e03131}.dn{color:#2f9e44}
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;padding:0 18px 12px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+#map{height:560px;border-radius:8px}canvas{width:100%;height:170px;display:block}
+.col{display:grid;gap:12px;align-content:start;min-width:0}
+.row{display:flex;align-items:center;gap:8px;margin:3px 0;cursor:pointer;font-size:13px}.row .n{width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .t{flex:1;background:var(--bd);height:10px;border-radius:5px;overflow:hidden}.row .t i{display:block;height:100%;background:var(--ac)}.row .v{width:52px;text-align:right;color:var(--mut)}.row.sel .n{color:var(--ac);font-weight:600}
+.w{padding:0 18px 12px}.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mut)}td.r,th.r{text-align:right}tbody tr{cursor:pointer}tbody tr:hover{background:var(--bd)}
+.hm td{text-align:center;padding:3px 4px;font-size:11px;border:1px solid var(--card)}.hm td.s{text-align:left;cursor:pointer;font-size:12px;border:0}
+.leg{display:flex;gap:2px;align-items:center;font-size:11px;color:var(--mut);margin-top:6px;flex-wrap:wrap}.leg i{width:26px;height:10px;display:inline-block}
+.tag{background:#e0313122;color:#e03131;border-radius:5px;padding:1px 6px;font-size:11px}
+#err{display:none;margin:0 18px 12px;padding:12px;border:1px solid var(--ac);border-radius:10px;background:var(--card)}
+details{padding:0 18px 24px;color:var(--mut);font-size:13px}
+</style></head><body>
+<header><h1>🔥 India <span>Fire Watch</span></h1><div id="badge"><i></i><span id="upd">loading…</span></div></header>
+<div class="bar">
+<select id="per" title="Time period"><option value="1">Latest day (24h)</option><option value="7" selected>Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option><option value="rabi">Rabi season (Apr–May)</option><option value="kharif">Kharif season (Oct–Nov)</option><option value="all">Full year</option></select>
+<select id="st"><option value="">All states</option></select><select id="di"><option value="">All districts</option></select>
+<button id="rs">Reset</button><button id="dl">⬇ Download CSV</button></div>
+<div id="err"><b>No data found.</b> Run <code>fetch_fires.py</code> once (see README steps) so the <code>data/</code> folder exists next to this page, and open it through a web server (e.g. GitHub Pages), not as a local file.</div>
+<div class="card" id="ins"></div><div class="kpis" id="kp"></div>
+<div class="grid">
+<div class="card"><h2>Map · districts shaded by fire count, dots = individual detections</h2><div id="map"></div><div class="leg" id="lg"></div></div>
+<div class="col">
+<div class="card"><h2>Daily detections (bars) &amp; 7-day average (line)</h2><canvas id="c1"></canvas></div>
+<div class="card"><h2>States ranked (click to filter)</h2><div id="ts"></div></div>
+<div class="card"><h2>Time of day, IST <span id="hn" style="text-transform:none"></span></h2><canvas id="c2"></canvas></div>
+</div></div>
+<div class="w"><div class="card"><h2>Top districts · change vs the previous equal period</h2><div class="sc"><table id="td"></table></div></div></div>
+<div class="w"><div class="card"><h2>Seasonality · detections per month in the 12 most affected states</h2><div class="sc"><table class="hm" id="hm"></table></div></div></div>
+<details><summary>How to read this dashboard</summary>
+<p><b>Active fire detection</b>: a heat anomaly seen by VIIRS satellites (Suomi-NPP, NOAA-20, NOAA-21, 375 m) from NASA FIRMS. Each satellite pass counts separately, so one fire seen twice counts twice. <b>FRP</b> (fire radiative power, MW) shows intensity; “large” means FRP ≥ 30 MW. Dates are UTC acquisition dates. <b>Surge</b> = at least 10 detections and at least 3× the previous period. Rabi = wheat-residue season, Kharif = paddy-residue season. Detections are not the same as burnt area.</p></details>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const $=i=>document.getElementById(i),fmt=n=>Math.round(n).toLocaleString('en-IN');
+let D=[],P=[],M={},GD,GS,map,lD,lS,lP,CUR={},fl={},ready=false;
+const S={st:'',di:''};
+const add=(s,n)=>{const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const dif=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+const pad=n=>String(n).padStart(2,'0');
+const ok=(s,k)=>(!S.st||s===S.st)&&(!S.di||k===S.di);
+const COLS=['#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#e31a1c','#800026'],BINS=[1,5,10,25,50,100];
+const shade=n=>n<=0?'transparent':COLS[Math.min(6,BINS.filter(b=>n>=b).length)];
+function range(){const e=M.latest,p=$('per').value;let a=e,b=e;
+  if(p==='rabi'||p==='kharif'){const[m1,m2]=p==='rabi'?[4,5]:[10,11],y=+e.slice(5,7)>=m1?+e.slice(0,4):+e.slice(0,4)-1;a=`${y}-${pad(m1)}-01`;b=add(`${y}-${pad(m2+1)}-01`,-1);if(b>e)b=e;if(a<M.first)a=M.first}
+  else if(p==='all'){a=M.first}else a=add(e,-(+p-1));return[a,b]}
+function calc(){
+  const[a,b]=range(),len=dif(a,b)+1,pa=add(a,-len),pb=add(a,-1),cur={},prv={},ser={},stt={},mon={};let tot=0,ptot=0,big=0;
+  for(const[d,s,k,n,f,l]of D){const key=s+'|'+k,m=d.slice(0,7);(mon[s]=mon[s]||{})[m]=(mon[s][m]||0)+n;
+    if(d>=a&&d<=b){const c=cur[key]||(cur[key]={s,k,n:0,f:0,l:0});c.n+=n;c.f+=f;c.l+=l;stt[s]=(stt[s]||0)+n;if(ok(s,k)){ser[d]=(ser[d]||0)+n;tot+=n;big+=l}}
+    else if(d>=pa&&d<=pb){prv[key]=(prv[key]||0)+n;if(ok(s,k))ptot+=n}}
+  return{a,b,len,cur,prv,ser,stt,mon,tot,ptot,big}}
+function ch(c,lab,v,ma){const d=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*d;c.height=h*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);
+  const st=getComputedStyle(document.body),mut=getComputedStyle(document.documentElement).getPropertyValue('--mut'),ac=getComputedStyle(document.documentElement).getPropertyValue('--ac'),bd=getComputedStyle(document.documentElement).getPropertyValue('--bd');
+  const p={l:36,r:6,t:6,b:18},mx=Math.max(1,...v,...(ma||[0])),n=v.length,bw=(w-p.l-p.r)/Math.max(n,1);x.font='10px system-ui';
+  for(let i=0;i<=3;i++){const y=p.t+(h-p.t-p.b)*i/3;x.strokeStyle=bd;x.beginPath();x.moveTo(p.l,y);x.lineTo(w-p.r,y);x.stroke();x.fillStyle=mut;x.textAlign='right';x.fillText(fmt(mx*(1-i/3)),p.l-4,y+3)}
+  x.fillStyle=ac;x.globalAlpha=ma?.35:1;v.forEach((q,i)=>{const bh=(h-p.t-p.b)*q/mx;x.fillRect(p.l+i*bw+.5,h-p.b-bh,Math.max(1,bw-1),bh)});x.globalAlpha=1;
+  if(ma){x.beginPath();ma.forEach((q,i)=>{const X=p.l+(i+.5)*bw,Y=h-p.b-(h-p.t-p.b)*q/mx;i?x.lineTo(X,Y):x.moveTo(X,Y)});x.strokeStyle=ac;x.lineWidth=2;x.stroke()}
+  x.fillStyle=mut;x.textAlign='center';const sp=Math.ceil(n/Math.max(1,Math.floor((w-p.l)/50)));lab.forEach((l,i)=>{if(i%sp===0)x.fillText(l,p.l+(i+.5)*bw,h-5)})}
+function render(){
+  if(!ready)return;const R=calc(),{a,b,len}=R;CUR=R.cur;
+  const lab=S.di||S.st||'India',ds=len===1?'in the latest day':`in the last ${len} days`,per=$('per').value,pl=per==='rabi'?'in the Rabi season':per==='kharif'?'in the Kharif season':per==='all'?'over the full year':ds;
+  const chg=R.ptot>0?Math.round((R.tot-R.ptot)/R.ptot*100):null,arrow=chg===null?'':chg>=0?`<span class="up">▲ ${chg}%</span>`:`<span class="dn">▼ ${-chg}%</span>`;
+  const rows=Object.values(R.cur).filter(r=>ok(r.s,r.k)).map(r=>({...r,p:R.prv[r.s+'|'+r.k]||0})).sort((x,y)=>y.n-x.n);
+  const top=Object.entries(R.stt).sort((x,y)=>y[1]-x[1]),sur=rows.filter(r=>r.n>=10&&r.n>=3*Math.max(r.p,1)).slice(0,3);
+  let h=`<p><b>${fmt(R.tot)}</b> fire detections for <b>${lab}</b> ${pl}${chg!==null?` — ${arrow} vs the previous ${len} day(s) (${fmt(R.ptot)}).`:'.'}</p>`;
+  if(!S.st&&top.length)h+=`<p>Most affected state: <b>${top[0][0]}</b> (${fmt(top[0][1])})${top[1]?`, then ${top[1][0]} (${fmt(top[1][1])})`:''}.</p>`;
+  if(rows.length)h+=`<p>Hardest-hit district: <b>${rows[0].k}</b>, ${rows[0].s} (${fmt(rows[0].n)}).</p>`;
+  h+=sur.length?`<p>⚠ Surging districts: ${sur.map(r=>`<b>${r.k}</b> (${r.s}, ${r.n} vs ${r.p})`).join('; ')}.</p>`:'<p>No district is surging sharply compared with the previous period.</p>';
+  $('ins').innerHTML=h;
+  const nd=new Set(rows.map(r=>r.k)).size,ns=new Set(rows.map(r=>r.s)).size,days=Object.keys(R.ser).length||1;
+  $('kp').innerHTML=[['Detections',fmt(R.tot),`${a} → ${b}`],['Per day',fmt(R.tot/len),'average'],['Large fires',fmt(R.big),'FRP ≥ '+M.large_frp+' MW'],['Districts',nd,'with fires'],['States',ns,'with fires']].map(k=>`<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b><small>${k[2]}</small></div>`).join('');
+  const L=[],V=[];for(let d=a;d<=b;d=add(d,1)){L.push(d.slice(5));V.push(R.ser[d]||0)}
+  const MA=V.map((_,i)=>{const s=V.slice(Math.max(0,i-6),i+1);return s.reduce((x,y)=>x+y,0)/s.length});ch($('c1'),L,V,MA);
+  const sm=top.length?top[0][1]:1;$('ts').innerHTML=top.slice(0,10).map(([s,n])=>`<div class="row ${s===S.st?'sel':''}" data-s="${s}"><span class="n">${s}</span><span class="t"><i style="width:${n/sm*100}%"></i></span><span class="v">${fmt(n)}</span></div>`).join('');
+  document.querySelectorAll('#ts .row').forEach(e=>e.onclick=()=>{setSel(S.st===e.dataset.s?'':e.dataset.s,'')});
+  const hr=new Array(24).fill(0);P.forEach(p=>{if(p[2]>=a&&p[2]<=b&&ok(p[8],p[9])){const m=(Math.floor(p[3]/100)*60+p[3]%100+330)%1440;hr[Math.floor(m/60)]++}});
+  ch($('c2'),hr.map((_,i)=>i),hr);$('hn').textContent=b>add(M.latest,-7)&&a<add(M.latest,-6)?'(last 7 days only)':'';
+  $('td').innerHTML='<thead><tr><th>#</th><th>District</th><th>State</th><th class="r">Fires</th><th class="r">Prev.</th><th class="r">Change</th><th class="r">Large</th><th class="r">FRP MW</th><th></th></tr></thead><tbody>'+rows.slice(0,20).map((r,i)=>{const c=r.p?Math.round((r.n-r.p)/r.p*100):null;return`<tr data-s="${r.s}" data-k="${r.k}"><td>${i+1}</td><td>${r.k}</td><td>${r.s}</td><td class="r">${fmt(r.n)}</td><td class="r">${fmt(r.p)}</td><td class="r ${c>0?'up':'dn'}">${c===null?'new':(c>0?'+':'')+c+'%'}</td><td class="r">${r.l}</td><td class="r">${fmt(r.f)}</td><td>${r.n>=10&&r.n>=3*Math.max(r.p,1)?'<span class="tag">surge</span>':''}</td></tr>`}).join('')+'</tbody>';
+  document.querySelectorAll('#td tbody tr').forEach(e=>e.onclick=()=>setSel(e.dataset.s,e.dataset.k));
+  const ms=[...new Set(Object.values(R.mon).flatMap(o=>Object.keys(o)))].sort(),hs=Object.entries(R.mon).map(([s,o])=>[s,Object.values(o).reduce((x,y)=>x+y,0),o]).sort((x,y)=>y[1]-x[1]).slice(0,12),gm=Math.max(1,...hs.flatMap(r=>Object.values(r[2])));
+  $('hm').innerHTML='<tr><td></td>'+ms.map(m=>`<td>${m.slice(2)}</td>`).join('')+'</tr>'+hs.map(([s,,o])=>`<tr><td class="s" data-s="${s}">${s}</td>`+ms.map(m=>{const v=o[m]||0;return`<td style="background:rgba(217,72,15,${v?.08+.92*Math.sqrt(v/gm):0});color:${v/gm>.4?'#fff':'inherit'}">${v?(v>=1000?(v/1000).toFixed(1)+'k':v):''}</td>`}).join('')+'</tr>').join('');
+  document.querySelectorAll('#hm td.s').forEach(e=>e.onclick=()=>setSel(e.dataset.s,''));
+  mapUpdate(R)}
+function mapUpdate(R){
+  const sty=f=>{const s=f.properties.state,k=f.properties.district,c=R.cur[s+'|'+k],n=c?c.n:0,on=ok(s,k);return{color:S.di===k&&S.st===s?'#000':'#888',weight:S.di===k&&S.st===s?2.5:.4,fillColor:shade(n),fillOpacity:on?(n?.75:0):.04}};
+  lD.setStyle(sty);lP.clearLayers();const[a,b]=[R.a,R.b];let pts=P.filter(p=>p[2]>=a&&p[2]<=b&&ok(p[8],p[9])).sort((x,y)=>y[4]-x[4]).slice(0,15000);
+  pts.forEach(p=>L.circleMarker([p[0],p[1]],{radius:p[4]>=30?5:3,weight:.5,color:'#222',fillColor:p[4]>=30?'#7a0c2e':p[4]>=10?'#e03131':'#ff922b',fillOpacity:.85}).bindTooltip(()=>`${p[9]}, ${p[8]}<br>${p[2]} · FRP ${p[4]} MW`).addTo(lP));
+  $('lg').innerHTML='Fires per district: '+['0',...BINS.map((b,i)=>b+(BINS[i+1]?'–'+(BINS[i+1]-1):'+'))].map((t,i)=>`<i style="background:${i?COLS[i]:'#ddd'}"></i>${t}`).join(' ')+` · dots: ${pts.length>=15000?'top 15,000 by FRP':fmt(pts.length)} (last 7 days of data only)`}
+function setSel(s,k){S.st=s;S.di=k;fillSel();render();
+  if(s){const ls=Object.values(fl).filter(l=>l.feature.properties.state===s&&(!k||l.feature.properties.district===k));if(ls.length)map.fitBounds(L.featureGroup(ls).getBounds(),{maxZoom:9})}else map.setView([22.5,80],5)}
+function fillSel(){const st=[...new Set(GD.features.map(f=>f.properties.state))].sort();$('st').innerHTML='<option value="">All states</option>'+st.map(s=>`<option ${s===S.st?'selected':''}>${s}</option>`).join('');
+  const ds=GD.features.filter(f=>!S.st||f.properties.state===S.st).map(f=>f.properties.district).sort();$('di').innerHTML='<option value="">All districts</option>'+(S.st?ds.map(d=>`<option ${d===S.di?'selected':''}>${d}</option>`).join(''):'')}
+function ago(){const m=Math.round((Date.now()-new Date(M.updated))/6e4),t=m<60?m+' min':m<2880?Math.round(m/60)+' h':Math.round(m/1440)+' days';$('upd').textContent=`Updated ${t} ago · latest data ${M.latest}`;$('badge').firstChild.style.background=m<240?'#2f9e44':m<720?'#f59f00':'#e03131'}
+async function load(){
+  try{const g=n=>fetch(`data/${n}?t=${Date.now()}`).then(r=>{if(!r.ok)throw n;return r.json()});
+    const[m,d,p,gd,gs]=await Promise.all([g('meta.json'),g('daily.json'),g('points_7d.json'),g('districts.geojson'),g('states.geojson')]);
+    M=m;D=d.rows;P=p.rows;
+    if(!ready){GD=gd;GS=gs;map=L.map('map',{preferCanvas:true}).setView([22.5,80],5);
+      const B={'Light':L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap, © CARTO',maxZoom:18}),'OpenStreetMap':L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}),'Satellite':L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri',maxZoom:18})};B.Light.addTo(map);
+      lD=L.geoJSON(GD,{onEachFeature:(f,l)=>{const k=f.properties.state+'|'+f.properties.district;fl[k]=l;l.bindTooltip(()=>`<b>${f.properties.district}</b>, ${f.properties.state}<br>${CUR[k]?fmt(CUR[k].n):0} fires`,{sticky:true});l.on('click',()=>setSel(f.properties.state,f.properties.district))}});
+      lS=L.geoJSON(GS,{style:{fill:false,color:'#444',weight:1.2},interactive:false});lP=L.layerGroup();
+      L.control.layers(B,{'Districts (fire count)':lD,'State boundary':lS,'Fire points':lP}).addTo(map);lD.addTo(map);lS.addTo(map);lP.addTo(map);fillSel();ready=true}
+    ago();render()}catch(e){console.error(e);$('err').style.display='block';$('upd').textContent='no data'}}
+$('per').onchange=render;$('st').onchange=e=>setSel(e.target.value,'');$('di').onchange=e=>setSel(S.st,e.target.value);$('rs').onclick=()=>setSel('','');
+$('dl').onclick=()=>{if(!ready)return;const R=calc(),t=['state,district,fires,previous,large_fires,frp_mw',...Object.values(R.cur).map(r=>[r.s,r.k,r.n,R.prv[r.s+'|'+r.k]||0,r.l,r.f.toFixed(1)].map(x=>`"${x}"`).join(','))].join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/csv'}));a.download=`fires_${R.a}_${R.b}.csv`;a.click()};
+addEventListener('resize',render);load();setInterval(load,10*60*1000);setInterval(()=>ready&&ago(),60000);
+</script></body></html>
